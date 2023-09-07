@@ -1,40 +1,39 @@
-import { useEffect } from 'react';
-import { useCustomDispatch, useCustomSelector } from '../redux/hooks/useRedux';
-import { fetchSurveyed } from '../redux/thunks/surveyedThunk';
-import { TableBodySurveyed } from './tableSurveyed/TableBodySurveyed';
+import { useEffect } from "react";
+import { useCustomDispatch, useCustomSelector } from "../redux/hooks/useRedux";
+import { fetchSurveyed } from "../redux/thunks/surveyedThunk";
+import { TableBodySurveyed } from "./tableSurveyed/TableBodySurveyed";
 
 export const TableSurveyed = () => {
   const { surveyed } = useCustomSelector((state) => state.surveyed);
   const dispatch = useCustomDispatch();
 
   useEffect(() => {
-    dispatch(fetchSurveyed())
-  }, [dispatch])
+    dispatch(fetchSurveyed());
+  }, [dispatch]);
 
   return (
-    <table className='table'>
+    <table className="table">
       <thead>
         <tr>
-          <th>lider</th>
-          <th>nombre</th>
-          <th>telefono</th>
-          <th>cédula</th>
-          <th>municipio</th>
-          <th>barrio</th>
-          <th>dirección</th>
-          <th>municipio de votación</th>
-          <th>puesto de votación</th>
-          <th>mesa de votación</th>
-          <th>acciones</th>
+          <th>LIDER</th>
+          <th>NOMBRE</th>
+          <th>TELEFONO</th>
+          <th>CEDULA</th>
+          <th>MUNICIPIO</th>
+          <th>BARRIO</th>
+          <th>DIRECCION</th>
+          <th>MUNICIPIO</th>
+          <th>PUESTO VOTACION</th>
+          <th>MESA</th>
+          <th>ACCIONES</th>
         </tr>
       </thead>
       <tbody>
-        {surveyed && surveyed.map((surveyed, i) => {
-          return (
-            <TableBodySurveyed surveyed={surveyed} key={i} />
-          )
-        })}
+        {surveyed &&
+          surveyed.map((surveyed, i) => {
+            return <TableBodySurveyed surveyed={surveyed} key={i} />;
+          })}
       </tbody>
     </table>
-  )
-}
+  );
+};

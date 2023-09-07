@@ -34,8 +34,8 @@ export const TableBodySurveyed = ({ surveyed }: TableBodySurveyedProps) => {
       <td>{namePollingStation}</td>
       <td>{nameVotingTable}</td>
       <td className=''>
-        <button className='btn btn-primary mb-2'>Editar</button>
-        <button className='btn btn-danger'>Eliminar</button>
+        <button className='btn btn-primary mb-2 row justify-content-center'>Editar</button>
+        <button className='btn btn-danger row justify-content-center'>Eliminar</button>
       </td>
     </tr>
   )

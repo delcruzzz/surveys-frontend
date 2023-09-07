@@ -24,18 +24,16 @@ const Home: FC<JSX.Element[]> = () => {
         }}
       >
         <div>
-          <h3 className='m-3'>líder: {userLogged.name}</h3>
-          <p className='m-3'>número de celular: {userLogged.cellPhoneNumber}</p>
-          <p className='m-3'>C.C: {userLogged.identityCard}</p>
+        <h2 className='m-3 '><p><b>LIDER: {userLogged.name} CEL: {userLogged.cellPhoneNumber} CC: {userLogged.identityCard}</b></p></h2>
         </div>
         <div>
           <button type='submit' className='butn' onClick={logout}>
-            Logout
+            Cerrar Sesión
           </button>
         </div>
       </div>
       <div className='container'>
-        <button className='btn btn-success mb-3'>agregar votante</button>
+        <button className='btn btn-success mb-3'>Agregar nuevo Encuestado</button>
         <TableSurveyed />
       </div>
     </>
