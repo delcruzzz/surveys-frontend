@@ -1,26 +1,32 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { AuthState, AuthUserResponse } from '../interfaces/authInterface';
+
+const initialState: AuthState = {
+  isLoading: false,
+  token: null,
+  isAuthenticated: false,
+  error: null,
+  user: null,
+}
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    token: null,
-    isAuthenticated: false,
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
     loginStart: (state) => {
-      state.loading = true;
+      state.isLoading = true;
       state.error = null;
     },
-    loginSuccess: (state, action: any) => {
-      state.loading = false;
+    loginSuccess: (state, action: PayloadAction<AuthUserResponse>) => {
+      const user = action.payload;
+      state.isLoading = false;
       state.isAuthenticated = true;
+      state.user = user;
       state.token = action.payload.token; // Accede a la propiedad 'token' del payload
       state.error = null;
     },
     loginFailure: (state, action) => {
-      state.loading = false;
+      state.isLoading = false;
       state.isAuthenticated = false;
       state.error = action.payload;
     },

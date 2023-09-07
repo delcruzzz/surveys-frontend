@@ -56,19 +56,35 @@ const Home: FC<JSX.Element[]> = () => {
           </thead>
           <tbody>
             {surveyed && surveyed.map((surveyed) => {
+              const { name: nameUser } = surveyed.user;
+              const {
+                name: nameNeighborhood,
+                municipality: {
+                  name: nameMunicipality
+                }
+              } = surveyed.neighborhood;
+              const {
+                name: nameVotingTable,
+                pollingStation: {
+                  name: namePollingStation,
+                  votingMunicipality: {
+                    name: nameVotingMunicipality
+                  }
+                }
+              } = surveyed.votingTable;
 
               return (
                 <tr key={surveyed.id}>
-                  <td>{surveyed.user.name}</td>
+                  <td>{nameUser}</td>
                   <td>{surveyed.name}</td>
                   <td>{surveyed.phoneNumber}</td>
                   <td>{surveyed.identityCard}</td>
-                  <td>{surveyed.neighborhood.municipality.name}</td>
-                  <td>{surveyed.neighborhood.name}</td>
+                  <td>{nameMunicipality}</td>
+                  <td>{nameNeighborhood}</td>
                   <td>{surveyed.address}</td>
-                  <td>{surveyed.votingTable.pollingStation.votingMunicipality.name}</td>
-                  <td>{surveyed.votingTable.pollingStation.name}</td>
-                  <td>{surveyed.votingTable.name}</td>
+                  <td>{nameVotingMunicipality}</td>
+                  <td>{namePollingStation}</td>
+                  <td>{nameVotingTable}</td>
                 </tr>
               )
             })}

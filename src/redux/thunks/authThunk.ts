@@ -17,8 +17,9 @@ export const loginUser = (data: any) => async (dispatch: any) => {
       dispatch(loginFailure(response.data.error));
     } else {
       localStorage.setItem('auth', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data));
       dispatch(loginSuccess(response.data));
-      console.log(response.data)
+      return response
     }
   } catch (error) {
     console.error(error);

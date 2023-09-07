@@ -4,10 +4,11 @@ import { Thunk } from '../store';
 
 export const fetchSurveyed = 
   (): Thunk => 
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.get('http://localhost:3000/api/surveyed', {
+      const userLogged = JSON.parse(localStorage.getItem('user') || '{}');
+      const response = await axios.get(`http://localhost:3000/api/surveyed/surveyed-by-user/${userLogged.id}`, {
         headers: { 
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('auth')}`
