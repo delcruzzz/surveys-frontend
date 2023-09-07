@@ -1,6 +1,7 @@
 // authThunks.js
 import { loginStart, loginSuccess, loginFailure } from '../slices/authSlice';
 import axios from 'axios';
+import { apiUrl } from '../../constants';
 
 export const loginUser = (data: any) => async (dispatch: any) => {
   dispatch(loginStart());
@@ -11,7 +12,7 @@ export const loginUser = (data: any) => async (dispatch: any) => {
       password: data.password,
     };
 
-    const response = await axios.post('http://localhost:8080/api/auth/login', params);
+    const response = await axios.post(`${apiUrl}/auth/login`, params);
 
     if (response.data.success === false) {
       dispatch(loginFailure(response.data.error));

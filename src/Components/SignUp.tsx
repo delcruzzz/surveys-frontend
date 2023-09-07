@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { apiUrl } from '../constants';
 
 type SomeComponentProps = RouteComponentProps;
 const SignUp: FC<SomeComponentProps> = ({ history }) => {
@@ -22,7 +23,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
       rolesId: [1, 2]
     };
     axios
-      .post('http://localhost:8080/api/users', params)
+      .post(`${apiUrl}/users`, params)
       .then(function (response) {
         toast.success(response.data.message, {
           position: 'top-right',
