@@ -31,12 +31,15 @@ const Login: FC<SomeComponentProps> = ({ history }): JSX.Element => {
           <div className='card mb-3' style={{ maxWidth: '320px' }}>
             <div className='col-md-12'>
               <div className='card-body'>
+              <div className="alert alert-info row justify-content-center">
+                BIENVENIDOS
+            </div>
                 <h3 className='card-title text-center text-secondary mt-3'>
-                  Login Form
+                Inicio de Sesión
                 </h3>
                 <form autoComplete='off' onSubmit={handleSubmit(handleLogin)}>
                   <div className='mb-3 mt-4'>
-                    <label className='form-label'>identityCard</label>
+                    <label className='form-label'>Cédula</label>
                     <input
                       type='identityCard'
                       className='form-control shadow-none'
@@ -50,7 +53,7 @@ const Login: FC<SomeComponentProps> = ({ history }): JSX.Element => {
                     )}
                   </div>
                   <div className='mb-3'>
-                    <label className='form-label'>Password</label>
+                    <label className='form-label'>Contraseña</label>
                     <input
                       type='password'
                       className='form-control shadow-none'
@@ -70,12 +73,12 @@ const Login: FC<SomeComponentProps> = ({ history }): JSX.Element => {
                       className='btn btn-outline-primary text-center shadow-none mb-3'
                       type='submit'
                     >
-                      Submit
+                      Acceso
                     </button>
                     <p className='card-text pb-2'>
-                      Have an Account?{' '}
+                      No tienes una cuenta?{' '}
                       <Link style={{ textDecoration: 'none' }} to={'/register'}>
-                        Sign Up
+                        Registrarse
                       </Link>
                     </p>
                   </div>

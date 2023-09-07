@@ -29,11 +29,11 @@ const Home: FC<JSX.Element[]> = () => {
         }}
       >
         <div>
-          <h3 className='m-3'>Home</h3>
+          <h3 className='m-3'>INICIO</h3>
         </div>
         <div>
           <button type='submit' className='butn' onClick={logout}>
-            Logout
+            Cerrar Sesión
           </button>
         </div>
       </div>

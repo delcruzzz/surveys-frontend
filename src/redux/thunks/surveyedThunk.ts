@@ -7,7 +7,7 @@ export const fetchSurveyed =
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.get('http://localhost:3000/api/surveyed', {
+      const response = await axios.get('http://localhost:8080/api/surveyed', {
         headers: { 
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('auth')}`
