@@ -35,6 +35,7 @@ const Home: FC<JSX.Element[]> = () => {
         </div>
       </div>
       <div className='container'>
+        <button className='btn btn-success mb-3'>agregar votante</button>
         <TableSurveyed />
       </div>
     </>
