@@ -6,7 +6,14 @@ const initialState: AuthState = {
   token: null,
   isAuthenticated: false,
   error: null,
-  user: null,
+  user: {
+    id: 0,
+    name: '',
+    identityCard: '',
+    cellPhoneNumber: '',
+    roles: [],
+    token: '',
+  },
 }
 
 const authSlice = createSlice({

@@ -1,7 +1,7 @@
 export interface SurveyedState {
   isLoading: boolean
   surveyed: SurveyedResponse[]
-  respondent: SurveyedResponse | null,
+  respondent: SurveyedResponse,
   openModalUpdateRespondent: boolean,
   openModalCreateRespondent: boolean,
 }

@@ -3,7 +3,7 @@ export interface AuthState {
   token: string | null
   isAuthenticated: boolean
   error: string | null
-  user: AuthUserResponse | null
+  user: AuthUserResponse
 }
 
 export interface AuthUserResponse {

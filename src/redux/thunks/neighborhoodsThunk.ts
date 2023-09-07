@@ -4,7 +4,7 @@ import { Thunk } from '../store';
 import { apiUrl } from '../../constants';
 
 export const fetchNeighborhoods = 
-  (municipalityId: number | undefined): Thunk => 
+  (municipalityId: number): Thunk => 
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
@@ -25,7 +25,7 @@ export const fetchNeighborhoods =
   }
 
 export const fetchNeighborhoodsById = 
-  (id: number | undefined): Thunk => 
+  (id: number): Thunk => 
   async (dispatch) => {
     try {
       const response = await axios.get(`${apiUrl}/neighborhoods/${id}`, {

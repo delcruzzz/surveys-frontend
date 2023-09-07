@@ -1,7 +1,7 @@
 export interface NeighborhoodState {
   isLoading: boolean;
   neighborhoods: NeighborhoodResponse[];
-  neighborhood: NeighborhoodResponse | null;
+  neighborhood: NeighborhoodResponse;
 }
 
 export interface NeighborhoodResponse {
