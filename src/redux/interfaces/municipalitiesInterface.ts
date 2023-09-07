@@ -1,7 +1,7 @@
 export interface MunicipalityState {
   isLoading: boolean
   municipalities: MunicipalityResponse[]
-  municipality: MunicipalityResponse | null
+  municipality: MunicipalityResponse
 }
 
 export interface MunicipalityResponse {

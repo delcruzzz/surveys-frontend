@@ -4,7 +4,10 @@ import { NeighborhoodResponse, NeighborhoodState } from '../interfaces/neighborh
 const initialState: NeighborhoodState = {
   isLoading: false,
   neighborhoods: [],
-  neighborhood: null,
+  neighborhood: {
+    id: 0,
+    name: '',
+  },
 }
 
 const neighborhoodsSlice = createSlice({

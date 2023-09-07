@@ -4,7 +4,38 @@ import { SurveyedResponse, SurveyedState } from '../interfaces/surveyedInterface
 const initialState: SurveyedState = {
   isLoading: false,
   surveyed: [],
-  respondent: null,
+  respondent: {
+    id: 0,
+    name: '',
+    phoneNumber: '',
+    identityCard: '',
+    address: '',
+    neighborhood: {
+      id: 0,
+      name: '',
+      municipality: {
+        id: 0,
+        name: '',
+      }
+    },
+    user: {
+      id: 0,
+      name: '',
+      identityCard: '',
+    },
+    votingTable: {
+      id: 0,
+      name: '',
+      pollingStation: {
+        id: 0,
+        name: '',
+        votingMunicipality: {
+          id: 0,
+          name: '',
+        }
+      }
+    }
+  },
   openModalUpdateRespondent: false,
   openModalCreateRespondent: false,
 }

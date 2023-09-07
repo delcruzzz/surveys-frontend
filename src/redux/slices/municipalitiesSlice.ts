@@ -4,7 +4,11 @@ import { MunicipalityResponse, MunicipalityState } from '../interfaces/municipal
 const initialState: MunicipalityState = {
   isLoading: false,
   municipalities: [],
-  municipality: null,
+  municipality: {
+    id: 0,
+    name: '',
+    neighborhoods: [],
+  },
 }
 
 const municipalitiesSlice = createSlice({
