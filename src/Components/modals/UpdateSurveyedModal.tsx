@@ -1,21 +1,23 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useCustomDispatch, useCustomSelector } from '../../redux/hooks/useRedux';
 import { setOpenModalUpdateRespondent } from '../../redux/slices/surveyedSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchMunicipalities } from '../../redux/thunks/municipalitiesThunk';
 import { fetchNeighborhoods } from '../../redux/thunks/neighborhoodsThunk';
 
 export const UpdateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
   const { openModalUpdateRespondent, respondent } = useCustomSelector((state) => state.surveyed);
+  const [selectedMunicipalityId, setSelectedMunicipalityId] = useState(respondent?.neighborhood.municipality.id);
   const { municipalities } = useCustomSelector((state) => state.municipalities);
   const { neighborhoods } = useCustomSelector((state) => state.neighborhoods);
-  console.log(respondent);
+
+  const idMunicipality = selectedMunicipalityId === undefined ? respondent?.neighborhood.municipality.id : selectedMunicipalityId;
 
   useEffect(() => {
     dispatch(fetchMunicipalities())
-    dispatch(fetchNeighborhoods(respondent?.neighborhood.municipality.id))
-  }, [dispatch, respondent?.neighborhood.municipality.id])
+    dispatch(fetchNeighborhoods(idMunicipality))
+  }, [dispatch, idMunicipality])
 
   return (
     <Modal
@@ -45,22 +47,22 @@ export const UpdateSurveyedModal = () => {
           <select
             defaultValue={respondent?.neighborhood.municipality.id}
             className='form-control'
+            onChange={(e) => setSelectedMunicipalityId(parseInt(e.target.value))}
           >
             {municipalities && municipalities.map((municipality) => (
-              <option key={municipality.id}>{municipality.name}</option>
+              <option key={municipality.id} value={municipality.id}>{municipality.name}</option>
             ))}
           </select>
           <select
             defaultValue={respondent?.neighborhood.id}
             className='form-control'
-            value={respondent?.neighborhood.id}
+            onChange={(e) => console.log(e.target.value)}
           >
-            {
-              municipalities.find((municipality) => municipality.id === respondent?.neighborhood.municipality.id)
-                  ?.neighborhoods.map((neighborhood) => (
-                    <option key={neighborhood.id}>{neighborhood.name}</option>
-                  ))
-            }
+            {neighborhoods && neighborhoods.map((neighborhood) => {
+              return (
+                <option key={neighborhood.id} value={neighborhood.id}>{neighborhood.name}</option>
+              )
+            })}
           </select>
           <input
             type='text'

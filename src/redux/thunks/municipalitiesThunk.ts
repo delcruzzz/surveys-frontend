@@ -15,7 +15,7 @@ export const fetchMunicipalities =
           'Authorization': `Bearer ${localStorage.getItem('auth')}`
         }
       });
-      const municipalities = response.data;
+      const municipalities = response.data as MunicipalityResponse[];
       dispatch(setMunicipalities(municipalities));
       return response;
     } catch (error) {

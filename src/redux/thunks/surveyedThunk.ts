@@ -16,7 +16,7 @@ export const fetchSurveyed =
           'Authorization': `Bearer ${localStorage.getItem('auth')}`
         }
       });
-      const surveyed = response.data;
+      const surveyed = response.data as SurveyedResponse[];
       console.log(surveyed);
       dispatch(setSurveyed(surveyed));
       return response;
