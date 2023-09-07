@@ -28,7 +28,9 @@ const surveyedSlice = createSlice({
     setOpenModalCreateRespondent: (state, action: PayloadAction<boolean>) => {
       state.openModalCreateRespondent = action.payload;
     },
-    updateListSureveyed: (state, action: PayloadAction<SurveyedResponse>) => {},
+    updateListSureveyed: (state, action: PayloadAction<SurveyedResponse>) => {
+      state.surveyed = [...state.surveyed, action.payload]
+    },
   }
 });
 

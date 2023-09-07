@@ -1,11 +1,21 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useCustomDispatch, useCustomSelector } from '../../redux/hooks/useRedux';
 import { setOpenModalUpdateRespondent } from '../../redux/slices/surveyedSlice';
+import { useEffect } from 'react';
+import { fetchMunicipalities } from '../../redux/thunks/municipalitiesThunk';
+import { fetchNeighborhoods } from '../../redux/thunks/neighborhoodsThunk';
 
 export const UpdateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
   const { openModalUpdateRespondent, respondent } = useCustomSelector((state) => state.surveyed);
+  const { municipalities } = useCustomSelector((state) => state.municipalities);
+  const { neighborhoods } = useCustomSelector((state) => state.neighborhoods);
   console.log(respondent);
+
+  useEffect(() => {
+    dispatch(fetchMunicipalities())
+    dispatch(fetchNeighborhoods(respondent?.neighborhood.municipality.id))
+  }, [dispatch, respondent?.neighborhood.municipality.id])
 
   return (
     <Modal
@@ -14,7 +24,7 @@ export const UpdateSurveyedModal = () => {
       <ModalHeader>actualizar encuestado</ModalHeader>
       <ModalBody>
         <form className='d-flex flex-column gap-3'>
-          <input 
+          <input
             type='text'
             className='form-control'
             placeholder='nombre'
@@ -33,16 +43,24 @@ export const UpdateSurveyedModal = () => {
             defaultValue={respondent?.identityCard}
           />
           <select
-            defaultValue={respondent?.neighborhood.municipality.name}
+            defaultValue={respondent?.neighborhood.municipality.id}
             className='form-control'
           >
-            <option></option>
+            {municipalities && municipalities.map((municipality) => (
+              <option key={municipality.id}>{municipality.name}</option>
+            ))}
           </select>
           <select
-            defaultValue={respondent?.neighborhood.name}
+            defaultValue={respondent?.neighborhood.id}
             className='form-control'
+            value={respondent?.neighborhood.id}
           >
-            <option></option>
+            {
+              municipalities.find((municipality) => municipality.id === respondent?.neighborhood.municipality.id)
+                  ?.neighborhoods.map((neighborhood) => (
+                    <option key={neighborhood.id}>{neighborhood.name}</option>
+                  ))
+            }
           </select>
           <input
             type='text'
@@ -72,7 +90,7 @@ export const UpdateSurveyedModal = () => {
       </ModalBody>
       <ModalFooter>
         <button className='btn btn-primary'>actualizar</button>
-        <button 
+        <button
           className='btn btn-danger'
           onClick={() => dispatch(setOpenModalUpdateRespondent(false))}
         >
