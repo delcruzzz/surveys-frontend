@@ -22,7 +22,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
       rolesId: [1, 2]
     };
     axios
-      .post('http://localhost:3000/api/users', params)
+      .post('http://localhost:8080/api/users', params)
       .then(function (response) {
         toast.success(response.data.message, {
           position: 'top-right',
@@ -55,16 +55,15 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
             <div className='col-md-12'>
               <div className='card-body'>
                 <h3 className='card-title text-center text-secondary mt-3 mb-3'>
-                  Sign Up Form
+                  Formulario de Registro
                 </h3>
                 <form
                   className='row'
                   autoComplete='off'
                   onSubmit={handleSubmit(submitData)}
                 >
-                  <div className='col-md-6'>
                     <div className=''>
-                      <label className='form-label'>name</label>
+                      <label className='form-label'>Nombre completo</label>
                       <input
                         type='text'
                         className='form-control form-control-sm'
@@ -78,11 +77,10 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
                           {errors.name.message}
                         </p>
                       )}
-                    </div>
                   </div>
 
                   <div className=''>
-                    <label className='form-label'>cellPhoneNumber</label>
+                    <label className='form-label'>Número de Celular</label>
                     <input
                       type='cellPhoneNumber'
                       className='form-control form-control-sm'
@@ -97,7 +95,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
                   </div>
 
                   <div className=''>
-                    <label className='form-label'>identityCard</label>
+                    <label className='form-label'>Número de Cédula</label>
                     <input
                       type='text'
                       className='form-control form-control-sm'
@@ -111,7 +109,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
                     )}
                   </div>
                   <div className=''>
-                    <label className='form-label'>Password</label>
+                    <label className='form-label'>Contraseña</label>
                     <input
                       type='password'
                       className='form-control form-control-sm'
@@ -132,12 +130,12 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
                       className='btn btn-outline-primary text-center shadow-none mb-3'
                       type='submit'
                     >
-                      Submit
+                      Registrase
                     </button>
                     <p className='card-text'>
-                      Already have an account?{' '}
+                      Ya tienes una cuenta?{' '}
                       <Link style={{ textDecoration: 'none' }} to={'/login'}>
-                        Log In
+                        Inicio de Sesión
                       </Link>
                     </p>
                   </div>

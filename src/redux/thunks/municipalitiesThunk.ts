@@ -7,7 +7,7 @@ export const fetchMunicipalities =
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.get('http://localhost:3000/api/municipalities', {
+      const response = await axios.get('http://localhost:8080/api/municipalities', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('auth')}`

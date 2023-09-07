@@ -11,7 +11,7 @@ export const loginUser = (data: any) => async (dispatch: any) => {
       password: data.password,
     };
 
-    const response = await axios.post('http://localhost:3000/api/auth/login', params);
+    const response = await axios.post('http://localhost:8080/api/auth/login', params);
 
     if (response.data.success === false) {
       dispatch(loginFailure(response.data.error));

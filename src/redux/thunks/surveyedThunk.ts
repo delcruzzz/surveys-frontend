@@ -8,7 +8,7 @@ export const fetchSurveyed =
     dispatch(setLoading(true));
     try {
       const userLogged = JSON.parse(localStorage.getItem('user') || '{}');
-      const response = await axios.get(`http://localhost:3000/api/surveyed/surveyed-by-user/${userLogged.id}`, {
+      const response = await axios.get(`http://localhost:8080/api/surveyed/surveyed-by-user/${userLogged.id}`, {
         headers: { 
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('auth')}`
