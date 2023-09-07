@@ -1,22 +1,17 @@
-import React, { FC, useEffect } from 'react';
+import { FC } from 'react';
 import './home.css';
-import { useCustomDispatch, useCustomSelector } from '../redux/hooks/useRedux';
-import { fetchSurveyed } from '../redux/thunks/surveyedThunk';
 import { useHistory } from 'react-router-dom';
+import { TableSurveyed } from './TableSurveyed';
+import { AuthUserResponse } from '../redux/interfaces/authInterface';
 
 const Home: FC<JSX.Element[]> = () => {
-  const dispatch = useCustomDispatch();
   const history = useHistory();
-  const { surveyed } = useCustomSelector((state) => state.surveyed);
+  const userLogged: AuthUserResponse = JSON.parse(localStorage.getItem('user') || '{}');
 
   const logout = () => {
     localStorage.clear();
     history.push('/login');
   };
-
-  useEffect(() => {
-    dispatch(fetchSurveyed())
-  }, [dispatch])
 
   return (
     <>
@@ -29,7 +24,9 @@ const Home: FC<JSX.Element[]> = () => {
         }}
       >
         <div>
-          <h3 className='m-3'>Home</h3>
+          <h3 className='m-3'>líder: {userLogged.name}</h3>
+          <p className='m-3'>número de celular: {userLogged.cellPhoneNumber}</p>
+          <p className='m-3'>C.C: {userLogged.identityCard}</p>
         </div>
         <div>
           <button type='submit' className='butn' onClick={logout}>
@@ -38,59 +35,7 @@ const Home: FC<JSX.Element[]> = () => {
         </div>
       </div>
       <div className='container'>
-        <table className='table'>
-          <thead>
-            <tr>
-              <th>lider</th>
-              <th>nombre</th>
-              <th>telefono</th>
-              <th>cédula</th>
-              <th>municipio</th>
-              <th>barrio</th>
-              <th>dirección</th>
-              <th>municipio de votación</th>
-              <th>puesto de votación</th>
-              <th>mesa de votación</th>
-              <th>acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {surveyed && surveyed.map((surveyed) => {
-              const { name: nameUser } = surveyed.user;
-              const {
-                name: nameNeighborhood,
-                municipality: {
-                  name: nameMunicipality
-                }
-              } = surveyed.neighborhood;
-              const {
-                name: nameVotingTable,
-                pollingStation: {
-                  name: namePollingStation,
-                  votingMunicipality: {
-                    name: nameVotingMunicipality
-                  }
-                }
-              } = surveyed.votingTable;
-
-              return (
-                <tr key={surveyed.id}>
-                  <td>{nameUser}</td>
-                  <td>{surveyed.name}</td>
-                  <td>{surveyed.phoneNumber}</td>
-                  <td>{surveyed.identityCard}</td>
-                  <td>{nameMunicipality}</td>
-                  <td>{nameNeighborhood}</td>
-                  <td>{surveyed.address}</td>
-                  <td>{nameVotingMunicipality}</td>
-                  <td>{namePollingStation}</td>
-                  <td>{nameVotingTable}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-        {JSON.stringify(surveyed)}
+        <TableSurveyed />
       </div>
     </>
   );

@@ -1,22 +1,20 @@
 import axios from 'axios';
-import { setLoading, setSurveyed } from '../slices/surveyedSlice';
+import { setLoading, setMunicipalities, setMunicipality } from '../slices/municipalitiesSlice';
 import { Thunk } from '../store';
 
-export const fetchSurveyed = 
+export const fetchMunicipalities = 
   (): Thunk => 
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const userLogged = JSON.parse(localStorage.getItem('user') || '{}');
-      const response = await axios.get(`http://localhost:3000/api/surveyed/surveyed-by-user/${userLogged.id}`, {
-        headers: { 
+      const response = await axios.get('http://localhost:3000/api/municipalities', {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('auth')}`
         }
       });
-      const surveyed = response.data;
-      console.log(surveyed);
-      dispatch(setSurveyed(surveyed));
+      const municipalities = response.data;
+      dispatch(setMunicipalities(municipalities));
       return response;
     } catch (error) {
       return error;
