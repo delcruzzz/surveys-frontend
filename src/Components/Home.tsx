@@ -4,8 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { TableSurveyed } from './TableSurveyed';
 import { AuthUserResponse } from '../redux/interfaces/authInterface';
 import { useCustomDispatch } from '../redux/hooks/useRedux';
-import { setOpenModalCreateRespondent } from '../redux/slices/surveyedSlice';
-import { CreateSurveyedModal } from './modals/CreateSurveyedModal';
+import { createSurveyed } from '../redux/thunks/surveyedThunk';
 
 const Home: FC<JSX.Element[]> = () => {
   const dispatch = useCustomDispatch();
@@ -38,14 +37,13 @@ const Home: FC<JSX.Element[]> = () => {
       </div>
       <div className='container'>
         <button 
-          className='btn btn-success mb-3'
-          onClick={() => dispatch(setOpenModalCreateRespondent(true))}
+          className='btn-ben-success mb-3'
+          /* onClick={() => dispatch(createSurveyed())} */
         >
           agregar votante
         </button>
         <TableSurveyed />
       </div>
-      <CreateSurveyedModal />
     </>
   );
 };
