@@ -48,7 +48,6 @@ export const UpdateSurveyedModal = () => {
           <select
             defaultValue={respondent.neighborhood.municipality.id}
             className='form-control'
-            onChange={(e) => console.log(e.target.value)}
           >
             {municipalities && municipalities.map((municipality) => (
               <option key={municipality.id} value={municipality.id}>{municipality.name}</option>
@@ -58,7 +57,6 @@ export const UpdateSurveyedModal = () => {
           <select
             defaultValue={respondent.neighborhood.id}
             className='form-control'
-            onChange={(e) => console.log(e.target.value)}
           >
             {neighborhoods && neighborhoods.map((neighborhood) => {
               return (

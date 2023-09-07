@@ -60,6 +60,16 @@ export const createSurveyed =
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
+      const userLogged = JSON.parse(localStorage.getItem('user') || '{}');
+      surveyed = {
+        address: surveyed.address,
+        identityCard: surveyed.identityCard,
+        name: surveyed.name,
+        phoneNumber: surveyed.phoneNumber,
+        userId: userLogged.id,
+        neighborhoodId: 4,
+        votingTableId: 4
+      }
       const response = await axios.post(`${apiUrl}/surveyed`, surveyed, {
         headers: {
           'Content-Type': 'application/json',
