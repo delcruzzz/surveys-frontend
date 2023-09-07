@@ -29,9 +29,9 @@ export const TableSurveyed = () => {
         </tr>
       </thead>
       <tbody>
-        {surveyed && surveyed.map((surveyed) => {
+        {surveyed && surveyed.map((surveyed, i) => {
           return (
-            <TableBodySurveyed surveyed={surveyed} />
+            <TableBodySurveyed surveyed={surveyed} key={i} />
           )
         })}
       </tbody>
