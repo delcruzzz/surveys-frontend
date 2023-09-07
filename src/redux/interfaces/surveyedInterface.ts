@@ -1,6 +1,9 @@
 export interface SurveyedState {
   isLoading: boolean
   surveyed: SurveyedResponse[]
+  respondent: SurveyedResponse | null,
+  openModalUpdateRespondent: boolean,
+  openModalCreateRespondent: boolean,
 }
 
 export interface SurveyedResponse {
@@ -46,4 +49,14 @@ export interface PollingStationSurveyed {
 export interface VotingMunicipalitySurveyed {
   id: number
   name: string
+}
+
+export interface CreateSurveyed {
+  name: string
+  phoneNumber: string
+  identityCard: string
+  address: string
+  neighborhoodId: number
+  userId: number
+  votingTableId: number
 }
