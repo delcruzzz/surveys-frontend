@@ -1,11 +1,21 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { useEffect, useState } from "react";
 import { useCustomDispatch, useCustomSelector } from '../../redux/hooks/useRedux';
 import { setOpenModalCreateRespondent } from '../../redux/slices/surveyedSlice';
 import { useForm } from 'react-hook-form';
 import { createSurveyed } from '../../redux/thunks/surveyedThunk';
+import { fetchMunicipalities } from "../../redux/thunks/municipalitiesThunk";
+import { CreateSurveyed } from '../../redux/interfaces/surveyedInterface';
 
 export const CreateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
+  const { municipalities } = useCustomSelector((state) => state.municipalities);
+  const { openModalUpdateRespondent, respondent } = useCustomSelector(
+    (state) => state.surveyed
+  );
+  const [selectedMunicipalityId, setSelectedMunicipalityId] = useState(
+    respondent?.neighborhood.municipality.id
+  );
   const { openModalCreateRespondent } = useCustomSelector((state) => state.surveyed);
   useCustomSelector((state) => state.auth)
   const {
@@ -24,19 +34,23 @@ export const CreateSurveyedModal = () => {
     console.log(data)
   }
 
+  useEffect(() => {
+    dispatch(fetchMunicipalities());
+  }, [dispatch]);
+
   return (
     <Modal
       isOpen={openModalCreateRespondent}
     >
-      <ModalHeader>crear encuestado</ModalHeader>
+      <ModalHeader>Crear Encuestado</ModalHeader>
       <ModalBody>
         <form className='d-flex flex-column gap-3' onSubmit={handleSubmit(handleSubmitCreateRespondent)}>
-          <label htmlFor='name'>nombre</label>
+          <label htmlFor='name'>Nombre</label>
           <input
             type='text'
             className='form-control'
             id='name'
-            placeholder='nombre'
+            placeholder='Nombre'
             {...register('name', { required: 'name is required!' })}
           />
           {errors.name && (
@@ -44,7 +58,7 @@ export const CreateSurveyedModal = () => {
               {errors.name.message}
             </p>
           )}
-          <label htmlFor='phoneNumber'>celular</label>
+          <label htmlFor='phoneNumber'>Celular</label>
           <input
             type='text'
             className='form-control'
@@ -57,7 +71,7 @@ export const CreateSurveyedModal = () => {
               {errors.phoneNumber.message}
             </p>
           )}
-          <label htmlFor='identityCard'>cédula</label>
+          <label htmlFor='identityCard'>Cédula</label>
           <input
             type='text'
             className='form-control'
@@ -70,15 +84,26 @@ export const CreateSurveyedModal = () => {
               {errors.identityCard.message}
             </p>
           )}
-          <label htmlFor='municipality'>municipio</label>
-          <select className='form-select' aria-label='Default select example'>
-            <option>seleccione un municipio</option>
+          <label htmlFor='municipality'>Municipio</label>
+          <select
+            defaultValue="Seleccione un municipio"
+            className="form-control"
+            onChange={(e) =>
+              setSelectedMunicipalityId(parseInt(e.target.value))
+            }
+          >
+            {municipalities.length &&
+              municipalities.map((municipality, i) => (
+                <option key={i} value={municipality.id}>
+                  {municipality.name}
+                </option>
+              ))}
           </select>
-          <label htmlFor='neighborhood'>barrio</label>
+          <label htmlFor='neighborhood'>Barrio</label>
           <select className='form-select' aria-label='Default select example'>
             <option></option>
           </select>
-          <label htmlFor='address'>dirección</label>
+          <label htmlFor='address'>Dirección</label>
           <input
             type='text'
             className='form-control'
@@ -91,19 +116,19 @@ export const CreateSurveyedModal = () => {
               {errors.address.message}
             </p>
           )}
-          <label htmlFor='votingMunicipality'>municipio de votación</label>
+          <label htmlFor='votingMunicipality'>Municipio de Votación</label>
           <select
             className='form-control'
           >
             <option></option>
           </select>
-          <label htmlFor='pollingStation'>puesto de votación</label>
+          <label htmlFor='pollingStation'>Puesto de Votación</label>
           <select
             className='form-control'
           >
             <option></option>
           </select>
-          <label htmlFor='votingTable'>mesa de votación</label>
+          <label htmlFor='votingTable'>Mesa de Votación</label>
           <select
             className='form-control'
           >

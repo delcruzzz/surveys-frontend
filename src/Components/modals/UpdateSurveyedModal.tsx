@@ -10,6 +10,7 @@ import { fetchNeighborhoods } from "../../redux/thunks/neighborhoodsThunk";
 import { fetchVotingMunicipalityies } from "../../redux/thunks/votingMunicipalityThunk";
 import { fetchPollingStations } from "../../redux/thunks/pollingStationsThunk";
 import { fetchVotingTables } from "../../redux/thunks/votingTablesThunk";
+import { useForm } from 'react-hook-form';
 
 export const UpdateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
@@ -62,27 +63,32 @@ export const UpdateSurveyedModal = () => {
 
   return (
     <Modal isOpen={openModalUpdateRespondent}>
-      <ModalHeader>actualizar encuestado</ModalHeader>
+      <ModalHeader>Actualizar Encuestado</ModalHeader>
       <ModalBody>
         <form className="d-flex flex-column gap-3">
+        <label htmlFor='name'>Nombre</label>
           <input
-            type="text"
-            className="form-control"
-            placeholder="nombre"
+            type='text'
+            className='form-control'
+            id='name'
+            placeholder='Nombre'
             defaultValue={respondent?.name}
           />
+          <label htmlFor='phoneNumber'>Celular</label>
           <input
             type="text"
             className="form-control"
             placeholder="telefono"
             defaultValue={respondent?.phoneNumber}
           />
+          <label htmlFor='identityCard'>Cédula</label>
           <input
             type="text"
             className="form-control"
             placeholder="cedula"
             defaultValue={respondent?.identityCard}
           />
+          <label htmlFor='municipality'>Municipio</label>
           <select
             defaultValue={respondent?.neighborhood.municipality.id}
             className="form-control"
@@ -97,6 +103,7 @@ export const UpdateSurveyedModal = () => {
                 </option>
               ))}
           </select>
+          <label htmlFor='neighborhood'>Barrio</label>
           <select
             defaultValue={respondent?.neighborhood.id || ""}
             className="form-control"
@@ -120,12 +127,14 @@ export const UpdateSurveyedModal = () => {
               </option>
             )}
           </select>
+          <label htmlFor='address'>Dirección</label>
           <input
             type="text"
             className="form-control"
             placeholder="direccion"
             defaultValue={respondent?.address}
           />
+          <label htmlFor='votingMunicipality'>Municipio de Votación</label>
           <select
             defaultValue={
               respondent?.votingTable.pollingStation.votingMunicipality.id
@@ -142,6 +151,7 @@ export const UpdateSurveyedModal = () => {
                 </option>
               ))}
           </select>
+          <label htmlFor='pollingStation'>Puesto de Votación</label>
           <select
             defaultValue={respondent?.votingTable.pollingStation.id || ""}
             className="form-control"
@@ -173,6 +183,7 @@ export const UpdateSurveyedModal = () => {
             )}
             {console.log(votingMunicipalities)}
           </select>
+          <label htmlFor='votingTable'>Mesa de Votación</label>
           <select
             defaultValue={respondent?.votingTable.id}
             className="form-control"
