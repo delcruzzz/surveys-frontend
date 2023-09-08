@@ -3,12 +3,11 @@ import { useCustomDispatch, useCustomSelector } from '../../redux/hooks/useRedux
 import { setOpenModalCreateRespondent } from '../../redux/slices/surveyedSlice';
 import { useForm } from 'react-hook-form';
 import { createSurveyed } from '../../redux/thunks/surveyedThunk';
-import { CreateSurveyed } from '../../redux/interfaces/surveyedInterface';
 
 export const CreateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
   const { openModalCreateRespondent } = useCustomSelector((state) => state.surveyed);
-  const { user } = useCustomSelector((state) => state.auth)
+  useCustomSelector((state) => state.auth)
   const {
     register,
     handleSubmit,

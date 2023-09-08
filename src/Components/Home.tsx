@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { TableSurveyed } from './TableSurveyed';
 import { AuthUserResponse } from '../redux/interfaces/authInterface';
 import { useCustomDispatch } from '../redux/hooks/useRedux';
-import { createSurveyed } from '../redux/thunks/surveyedThunk';
 import { setOpenModalCreateRespondent } from '../redux/slices/surveyedSlice';
 import { CreateSurveyedModal } from './modals/CreateSurveyedModal';
 

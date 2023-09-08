@@ -4,6 +4,9 @@ import authSlice from './slices/authSlice';
 import surveyedSlice from './slices/surveyedSlice';
 import municipalitiesSlice from './slices/municipalitiesSlice';
 import neighborhoodsSlice from './slices/neighborhoodsSlice';
+import votingMunicipalitySlice from './slices/votingMunicipalitySlice';
+import pollingStationSlice from './slices/pollingStationSlice';
+import votingTableSlice from './slices/votingTableSlice';
 
 const store = configureStore({
   reducer: {
@@ -11,6 +14,9 @@ const store = configureStore({
     surveyed: surveyedSlice,
     municipalities: municipalitiesSlice,
     neighborhoods: neighborhoodsSlice,
+    votingMunicipalities: votingMunicipalitySlice,
+    pollingStation: pollingStationSlice,
+    votingTable: votingTableSlice,
   },
 });
 

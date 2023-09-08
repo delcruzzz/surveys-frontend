@@ -4,7 +4,7 @@ import { Thunk } from '../store';
 import { apiUrl } from '../../constants';
 
 export const fetchNeighborhoods = 
-  (municipalityId: number): Thunk => 
+  (municipalityId: number | undefined): Thunk => 
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
