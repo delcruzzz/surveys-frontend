@@ -7,6 +7,7 @@ import neighborhoodsSlice from './slices/neighborhoodsSlice';
 import votingMunicipalitySlice from './slices/votingMunicipalitySlice';
 import pollingStationSlice from './slices/pollingStationSlice';
 import votingTableSlice from './slices/votingTableSlice';
+import { uiSlice } from './slices/uiSlice';
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     votingMunicipalities: votingMunicipalitySlice,
     pollingStation: pollingStationSlice,
     votingTable: votingTableSlice,
+    ui: uiSlice.reducer,
   },
 });
 

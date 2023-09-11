@@ -2,8 +2,6 @@ import axios from 'axios';
 import { 
   selectedRespondent, 
   setLoading, 
-  setOpenModalCreateRespondent, 
-  setOpenModalUpdateRespondent, 
   setSurveyed, 
   updateListSurveyed, 
   updateListSurveyedAction,
@@ -12,6 +10,7 @@ import {
 import { Thunk } from '../store';
 import { apiUrl } from '../../constants';
 import { CreateSurveyed, SurveyedResponse, UpdateSurveyed } from '../interfaces/surveyedInterface';
+import { addMessage } from '../slices/uiSlice';
 
 export const fetchSurveyed = 
   (): Thunk => 
@@ -48,7 +47,6 @@ export const fetchSurveyedById =
       });
       const respondent = response.data as SurveyedResponse;
       dispatch(selectedRespondent(respondent));
-      dispatch(setOpenModalUpdateRespondent(true));
       return response;
     } catch (error) {
       return error;
@@ -82,9 +80,16 @@ export const fetchSurveyedById =
 
       const respondent = response.data as SurveyedResponse;
       dispatch(updateListSurveyed(respondent));
-
+      dispatch(addMessage({
+        message: 'Encuestado creado con éxito',
+        variant: 'success',
+      }))
       return response;
     } catch (error) {
+      dispatch(addMessage({
+        message: 'Error al crear el encuestado',
+        variant: 'error',
+      }))
       return error;
     } finally {
       dispatch(setLoading(false));
