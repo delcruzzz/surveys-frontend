@@ -14,7 +14,7 @@ export interface SurveyedResponse {
   address: string
   neighborhood: NeighborhoodSurveyed
   user: SurveyedUser
-  votingTable: VotingTableSurveyed
+  votingTableId: VotingTableSurveyed
 }
 
 export interface NeighborhoodSurveyed {
@@ -58,5 +58,15 @@ export interface CreateSurveyed {
   address: string
   neighborhoodId: number
   userId: number
-  votingTableId: number
+  votingTable: number
+}
+
+export interface UpdateSurveyed {
+  name?: string
+  phoneNumber?: string
+  identityCard?: string
+  address?: string
+  neighborhoodId?: number
+  userId?: number
+  votingTable?: number
 }

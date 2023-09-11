@@ -5,11 +5,13 @@ import {
   setOpenModalCreateRespondent, 
   setOpenModalUpdateRespondent, 
   setSurveyed, 
-  updateListSureveyed 
+  updateListSurveyed, 
+  updateListSurveyedAction,
+  updateListSurveyedAfterDelete
 } from '../slices/surveyedSlice';
 import { Thunk } from '../store';
 import { apiUrl } from '../../constants';
-import { CreateSurveyed, SurveyedResponse } from '../interfaces/surveyedInterface';
+import { CreateSurveyed, SurveyedResponse, UpdateSurveyed } from '../interfaces/surveyedInterface';
 
 export const fetchSurveyed = 
   (): Thunk => 
@@ -55,8 +57,8 @@ export const fetchSurveyedById =
     }
   }
 
-export const createSurveyed = 
-  (surveyed: CreateSurveyed): Thunk => 
+  export const createSurveyed =
+  (surveyed: CreateSurveyed): Thunk =>
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
@@ -68,8 +70,9 @@ export const createSurveyed =
         phoneNumber: surveyed.phoneNumber,
         userId: userLogged.id,
         neighborhoodId: 4,
-        votingTableId: 4
+        votingTable: 4
       }
+
       const response = await axios.post(`${apiUrl}/surveyed`, surveyed, {
         headers: {
           'Content-Type': 'application/json',
@@ -78,8 +81,8 @@ export const createSurveyed =
       });
 
       const respondent = response.data as SurveyedResponse;
-      dispatch(updateListSureveyed(respondent));
-      dispatch(setOpenModalCreateRespondent(true));
+      dispatch(updateListSurveyed(respondent));
+
       return response;
     } catch (error) {
       return error;
@@ -87,3 +90,85 @@ export const createSurveyed =
       dispatch(setLoading(false));
     }
   }
+
+
+export const updateSurveyed =
+  (surveyed: UpdateSurveyed, surveyedId: number): Thunk =>
+  async (dispatch) => {
+    dispatch(setLoading(true));
+    const userLogged = JSON.parse(localStorage.getItem('user') || '{}');
+    surveyed = {
+      address: surveyed.address,
+      identityCard: surveyed.identityCard,
+      name: surveyed.name,
+      phoneNumber: surveyed.phoneNumber,
+      userId: userLogged.id,
+      neighborhoodId: 4,
+      votingTable: 4,
+    }
+
+    try {
+      const response = await axios.put(`${apiUrl}/surveyed/${surveyedId}`, surveyed, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+        }
+      });
+
+      const respondent = response.data as SurveyedResponse;
+
+      dispatch(updateListSurveyedAction(respondent));
+      return response
+    } catch (error) {
+      return error;
+    } finally {
+      dispatch(setLoading(false))
+    }
+  }
+
+export const deleteSurveyed =
+  (respondentId: number): Thunk =>
+  async (dispatch) => {
+    dispatch(setLoading(true));
+
+    try {
+      const response = axios.delete(`${apiUrl}/surveyed/${respondentId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+        }
+      });
+
+      const respondent = (await response).data as SurveyedResponse;
+
+      dispatch(updateListSurveyedAfterDelete(respondent))
+
+      return response;
+    } catch (error) {
+      return error;
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }
+
+/* export const updateSurveyed =
+  (surveyed: UpdateSurveyed, surveyedId: number): Thunk =>
+  async (dispatch) =>
+    dispatch(setLoading(true));
+    try {
+      const response = await axios.put(`${apiUrl}/surveyed/${surveyedId}`, surveyed, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+        }
+      })
+      const respondent = response.data as SurveyedResponse;
+      dispatch(updateListSureveyed(respondent));
+      dispatch(setOpenModalCreateRespondent(true));
+      return response;
+    } catch (error) {
+        return error;
+  } finally {
+      dispatch(setLoading(false));
+  }
+} */

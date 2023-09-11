@@ -41,7 +41,7 @@ const Home: FC<JSX.Element[]> = () => {
           className='btn btn-success mb-3'
           onClick={() => dispatch(setOpenModalCreateRespondent(true))}
         >
-          agregar votante
+          Agregar Votante
         </button>
         <TableSurveyed />
       </div>

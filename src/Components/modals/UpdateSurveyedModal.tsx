@@ -11,6 +11,8 @@ import { fetchVotingMunicipalityies } from "../../redux/thunks/votingMunicipalit
 import { fetchPollingStations } from "../../redux/thunks/pollingStationsThunk";
 import { fetchVotingTables } from "../../redux/thunks/votingTablesThunk";
 import { useForm } from 'react-hook-form';
+import { updateSurveyed } from "../../redux/thunks/surveyedThunk";
+import { fetchSurveyedById } from '../../redux/thunks/surveyedThunk';
 
 export const UpdateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
@@ -21,9 +23,9 @@ export const UpdateSurveyedModal = () => {
     respondent?.neighborhood.municipality.id
   );
   const [selectedVotingMunicipality, setSelectedVotingMunicipalityId] =
-    useState(respondent?.votingTable.pollingStation.votingMunicipality.id);
+    useState(respondent?.votingTableId.pollingStation.votingMunicipality.id);
   const [selectedVotingTables, setSelectedVotingTablesId] = useState(
-    respondent?.votingTable.id
+    respondent?.votingTableId.id
   );
   const { municipalities } = useCustomSelector((state) => state.municipalities);
   const { votingMunicipalities } = useCustomSelector(
@@ -41,12 +43,12 @@ export const UpdateSurveyedModal = () => {
 
   const idVotingMunicipality =
     selectedVotingMunicipality === undefined
-      ? respondent?.votingTable.pollingStation.votingMunicipality.id
+      ? respondent?.votingTableId.pollingStation.votingMunicipality.id
       : selectedVotingMunicipality;
 
   const idVotingTables =
     selectedVotingTables === undefined
-      ? respondent?.votingTable.pollingStation.id
+      ? respondent?.votingTableId.pollingStation.id
       : selectedVotingTables;
 
   useEffect(() => {
@@ -54,18 +56,31 @@ export const UpdateSurveyedModal = () => {
     dispatch(fetchVotingMunicipalityies());
     dispatch(fetchNeighborhoods(idMunicipality));
     dispatch(fetchPollingStations(idVotingMunicipality));
-    dispatch(fetchVotingTables(respondent?.votingTable.pollingStation.id));
+    dispatch(fetchVotingTables(respondent?.votingTableId.pollingStation.id));
   }, [dispatch, idMunicipality, idVotingMunicipality, idVotingTables]);
 
-  console.log({"pollingId": respondent?.votingTable.pollingStation.id})
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  console.log({idVotingTables})
+  const handleSubmitCreateRespondent = async (data: any) => {
+    data = {
+      ...data,
+      phoneNumber: data.phoneNumber,
+      neighborhoodId: 4,
+    }
+    dispatch(updateSurveyed(data, respondent.id))
+    dispatch(setOpenModalUpdateRespondent(false))
+    console.log(data)
+  }
 
   return (
     <Modal isOpen={openModalUpdateRespondent}>
       <ModalHeader>Actualizar Encuestado</ModalHeader>
       <ModalBody>
-        <form className="d-flex flex-column gap-3">
+        <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(handleSubmitCreateRespondent)}>
         <label htmlFor='name'>Nombre</label>
           <input
             type='text'
@@ -73,6 +88,7 @@ export const UpdateSurveyedModal = () => {
             id='name'
             placeholder='Nombre'
             defaultValue={respondent?.name}
+            {...register('name', { required: 'name is required!' })}
           />
           <label htmlFor='phoneNumber'>Celular</label>
           <input
@@ -80,6 +96,7 @@ export const UpdateSurveyedModal = () => {
             className="form-control"
             placeholder="telefono"
             defaultValue={respondent?.phoneNumber}
+            {...register('phoneNumber', { required: 'phoneNumber is required!' })}
           />
           <label htmlFor='identityCard'>Cédula</label>
           <input
@@ -87,6 +104,7 @@ export const UpdateSurveyedModal = () => {
             className="form-control"
             placeholder="cedula"
             defaultValue={respondent?.identityCard}
+            {...register('identityCard', { required: 'identityCard is required!' })}
           />
           <label htmlFor='municipality'>Municipio</label>
           <select
@@ -133,11 +151,12 @@ export const UpdateSurveyedModal = () => {
             className="form-control"
             placeholder="direccion"
             defaultValue={respondent?.address}
+            {...register('address', { required: 'address is required!' })}
           />
           <label htmlFor='votingMunicipality'>Municipio de Votación</label>
           <select
             defaultValue={
-              respondent?.votingTable.pollingStation.votingMunicipality.id
+              respondent?.votingTableId.pollingStation.votingMunicipality.id
             }
             className="form-control"
             onChange={(e) =>
@@ -153,21 +172,21 @@ export const UpdateSurveyedModal = () => {
           </select>
           <label htmlFor='pollingStation'>Puesto de Votación</label>
           <select
-            defaultValue={respondent?.votingTable.pollingStation.id || ""}
+            defaultValue={respondent?.votingTableId.pollingStation.id || ""}
             className="form-control"
             onChange={(e) =>
               setSelectedVotingMunicipalityId(parseInt(e.target.value))
             }
           >
             {votingMunicipalities &&
-            respondent?.votingTable.pollingStation.votingMunicipality.id !==
+            respondent?.votingTableId.pollingStation.votingMunicipality.id !==
               undefined ? (
               votingMunicipalities
                 .find(
                   (x) =>
                     x.id ===
                     Number(
-                      respondent?.votingTable.pollingStation.votingMunicipality
+                      respondent?.votingTableId.pollingStation.votingMunicipality
                         .id
                     )
                 )
@@ -177,43 +196,24 @@ export const UpdateSurveyedModal = () => {
                   </option>
                 ))
             ) : (
-              <option value={respondent?.votingTable.pollingStation.id || ""}>
+              <option value={respondent?.votingTableId.pollingStation.id || ""}>
                 Seleccione un puesto de votación
               </option>
             )}
             {console.log(votingMunicipalities)}
           </select>
           <label htmlFor='votingTable'>Mesa de Votación</label>
-          <select
-            defaultValue={respondent?.votingTable.id}
+          <input
+            type="text"
             className="form-control"
-            onChange={(e) =>
-              setSelectedVotingTablesId(parseInt(e.target.value))
-            }
-          >
-            {
-            respondent?.votingTable.pollingStation.id !== undefined ? (
-              pollingStations
-                .find((x) => x.id === respondent?.votingTable.pollingStation.id)
-                ?.votingTables.map((votingTables) => (
-                  <option key={votingTables.id} value={votingTables.id}>
-                    {votingTables.name}
-                  </option>
-                ))
-            ) : (
-              <option value={respondent?.votingTable.id || ""}>
-                Seleccione una mesa
-              </option>
-            )}
-            {console.log({idVotingTables})}
-            {console.log(pollingStations)}
-            {console.log(respondent?.votingTable.pollingStation.id)}
-            {console.log(respondent?.votingTable.id)}
-          </select>
+            placeholder="mesa de votacion"
+            defaultValue={respondent?.votingTableId.id}
+            {...register('votingTable', { required: 'votingTable is required!' })}
+          />
+            <button className="btn btn-primary"type="submit">actualizar</button>
         </form>
       </ModalBody>
       <ModalFooter>
-        <button className="btn btn-primary">actualizar</button>
         <button
           className="btn btn-danger"
           onClick={() => dispatch(setOpenModalUpdateRespondent(false))}

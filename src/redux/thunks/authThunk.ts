@@ -2,6 +2,7 @@
 import { loginStart, loginSuccess, loginFailure } from '../slices/authSlice';
 import axios from 'axios';
 import { apiUrl } from '../../constants';
+import { AuthUserResponse } from '../interfaces/authInterface';
 
 export const loginUser = (data: any) => async (dispatch: any) => {
   dispatch(loginStart());
@@ -19,7 +20,7 @@ export const loginUser = (data: any) => async (dispatch: any) => {
     } else {
       localStorage.setItem('auth', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data));
-      dispatch(loginSuccess(response.data));
+      dispatch(loginSuccess(response.data as AuthUserResponse));
       return response
     }
   } catch (error) {

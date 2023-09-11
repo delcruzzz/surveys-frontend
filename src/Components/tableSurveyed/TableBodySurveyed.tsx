@@ -1,6 +1,6 @@
 import { useCustomDispatch } from '../../redux/hooks/useRedux';
 import { SurveyedResponse } from '../../redux/interfaces/surveyedInterface';
-import { fetchSurveyedById } from '../../redux/thunks/surveyedThunk';
+import { deleteSurveyed, fetchSurveyedById } from '../../redux/thunks/surveyedThunk';
 import { UpdateSurveyedModal } from '../modals/UpdateSurveyedModal';
 type TableBodySurveyedProps = {
   surveyed: SurveyedResponse
@@ -24,7 +24,7 @@ export const TableBodySurveyed = ({ surveyed }: TableBodySurveyedProps) => {
         name: nameVotingMunicipality
       }
     }
-  } = surveyed.votingTable;
+  } = surveyed.votingTableId;
 
   return (
     <>
@@ -39,12 +39,15 @@ export const TableBodySurveyed = ({ surveyed }: TableBodySurveyedProps) => {
         <td>{nameVotingMunicipality}</td>
         <td>{namePollingStation}</td>
         <td>{nameVotingTable}</td>
-        <td className=''>
-          <button 
+        <td className='text-center'>
+          <button
             className='btn btn-primary mb-2'
             onClick={() => dispatch(fetchSurveyedById(surveyed.id))}
           >Editar</button>
-          <button className='btn btn-danger'>Eliminar</button>
+          <button
+            className='btn btn-danger'
+            onClick={() => dispatch(deleteSurveyed(surveyed.id))}
+          >Eliminar</button>
         </td>
       </tr>
       <UpdateSurveyedModal />

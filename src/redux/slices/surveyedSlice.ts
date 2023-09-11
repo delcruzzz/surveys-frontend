@@ -23,7 +23,7 @@ const initialState: SurveyedState = {
       name: '',
       identityCard: '',
     },
-    votingTable: {
+    votingTableId: {
       id: 0,
       name: '',
       pollingStation: {
@@ -59,18 +59,29 @@ const surveyedSlice = createSlice({
     setOpenModalCreateRespondent: (state, action: PayloadAction<boolean>) => {
       state.openModalCreateRespondent = action.payload;
     },
-    updateListSureveyed: (state, action: PayloadAction<SurveyedResponse>) => {
+    updateListSurveyed: (state, action: PayloadAction<SurveyedResponse>) => {
       state.surveyed = [...state.surveyed, action.payload]
     },
+    updateListSurveyedAction: (state, action: PayloadAction<SurveyedResponse>) => {
+      const updateSurveyed = action.payload;
+      const existingSurveyedIndex = state.surveyed.findIndex(respondent => respondent.id === updateSurveyed.id);
+      state.surveyed.splice(existingSurveyedIndex, 1, updateSurveyed)
+    },
+    updateListSurveyedAfterDelete: (state, action: PayloadAction<SurveyedResponse>) => {
+      const respondent = action.payload.id;
+      state.surveyed = state.surveyed.filter((e) => e.id !== respondent);
+    }
   }
 });
 
-export const { 
-  setLoading, 
-  setSurveyed, 
-  selectedRespondent, 
-  setOpenModalUpdateRespondent, 
-  setOpenModalCreateRespondent, 
-  updateListSureveyed, 
+export const {
+  setLoading,
+  setSurveyed,
+  selectedRespondent,
+  setOpenModalUpdateRespondent,
+  setOpenModalCreateRespondent,
+  updateListSurveyed,
+  updateListSurveyedAction,
+  updateListSurveyedAfterDelete,
 } = surveyedSlice.actions;
 export default surveyedSlice.reducer;
