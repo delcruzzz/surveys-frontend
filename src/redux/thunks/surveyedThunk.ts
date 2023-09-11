@@ -130,6 +130,7 @@ export const deleteSurveyed =
   (respondentId: number): Thunk =>
   async (dispatch) => {
     dispatch(setLoading(true));
+    window.location.replace('');
 
     try {
       const response = axios.delete(`${apiUrl}/surveyed/${respondentId}`, {
