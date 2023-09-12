@@ -15,6 +15,9 @@ export const CreateSurveyedModal = () => {
   const { openModalUpdateRespondent, respondent } = useCustomSelector(
     (state) => state.surveyed
   );
+  const [selectedPollingStationId, setSelectedPollingStationId] = useState(
+    respondent?.votingTableId.pollingStation.id
+  );
   const [selectedMunicipalityId, setSelectedMunicipalityId] = useState(
     respondent?.neighborhood.municipality.id
   );
@@ -120,7 +123,7 @@ export const CreateSurveyedModal = () => {
               municipalities
                 .find(
                   (x) =>
-                    x.id === Number(respondent?.neighborhood.municipality.id)
+                    x.id === selectedMunicipalityId
                 )
                 ?.neighborhoods.map((neighborhood) => (
                   <option key={neighborhood.id} value={neighborhood.id}>
@@ -167,8 +170,8 @@ export const CreateSurveyedModal = () => {
           <select
             defaultValue={"Seleccione un puesto de votación"}
             className="form-control"
-            onChange={(e) =>
-              setSelectedVotingMunicipalityId(parseInt(e.target.value))
+            onChange={
+              (e) => setSelectedPollingStationId(parseInt(e.target.value))
             }
           >
             {votingMunicipalities &&
@@ -178,10 +181,7 @@ export const CreateSurveyedModal = () => {
                 .find(
                   (x) =>
                     x.id ===
-                    Number(
-                      respondent?.votingTableId.pollingStation.votingMunicipality
-                        .id
-                    )
+                    selectedVotingMunicipality
                 )
                 ?.pollingStations.map((pollingStation) => (
                   <option key={pollingStation.id} value={pollingStation.id}>

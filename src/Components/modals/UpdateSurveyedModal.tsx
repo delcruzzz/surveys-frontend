@@ -19,13 +19,22 @@ export const UpdateSurveyedModal = () => {
   const { openModalUpdateRespondent, respondent } = useCustomSelector(
     (state) => state.surveyed
   );
+  //agrega id de municipio
   const [selectedMunicipalityId, setSelectedMunicipalityId] = useState(
     respondent?.neighborhood.municipality.id
   );
+  //agrega id de barrios
+  const [selectedNeighborhoodId, setSelectedNeighborhoodId] = useState(respondent.neighborhood.id);
+  //agrega id de municipio de votación
   const [selectedVotingMunicipality, setSelectedVotingMunicipalityId] =
     useState(respondent?.votingTableId.pollingStation.votingMunicipality.id);
+    //agrega id de mesa de votacion
   const [selectedVotingTables, setSelectedVotingTablesId] = useState(
     respondent?.votingTableId.id
+  );
+
+  const [selectedPollingStationId, setSelectedPollingStationId] = useState(
+    respondent?.votingTableId.pollingStation.id
   );
   const { municipalities } = useCustomSelector((state) => state.municipalities);
   const { votingMunicipalities } = useCustomSelector(
@@ -51,29 +60,32 @@ export const UpdateSurveyedModal = () => {
       ? respondent?.votingTableId.pollingStation.id
       : selectedVotingTables;
 
-  useEffect(() => {
-    dispatch(fetchMunicipalities());
-    dispatch(fetchVotingMunicipalityies());
-    dispatch(fetchNeighborhoods(idMunicipality));
-    dispatch(fetchPollingStations(idVotingMunicipality));
-    dispatch(fetchVotingTables(respondent?.votingTableId.pollingStation.id));
-  }, [dispatch, idMunicipality, idVotingMunicipality, idVotingTables]);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const handleSubmitUpdateForm = async (data: any) => {
+  const handleSubmitUpdateForm = async (data: any, e: any) => {
+    e.preventDefault();
     data = {
       ...data,
       phoneNumber: data.phoneNumber,
-      neighborhoodId: data.neighborhoodId,
+      neighborhoodId:selectedNeighborhoodId,
+      pollingStation:selectedPollingStationId,
     }
     await dispatch(updateSurveyed(data, respondent.id))
     dispatch(setOpenModalUpdateRespondent(false))
+    window.location.replace('');
   }
+
+  useEffect(() => {
+    dispatch(fetchMunicipalities());
+    dispatch(fetchVotingMunicipalityies());
+    dispatch(fetchNeighborhoods(idMunicipality));
+    dispatch(fetchPollingStations(idVotingMunicipality));
+    dispatch(fetchVotingTables(respondent?.votingTableId.pollingStation.id));
+  }, [dispatch, idMunicipality, idVotingMunicipality, idVotingTables, respondent?.votingTableId.pollingStation.id]);
 
   return (
     <Modal isOpen={openModalUpdateRespondent}>
@@ -131,7 +143,7 @@ export const UpdateSurveyedModal = () => {
             id="neighborhood"
             {...register('neighborhood', { required: 'Necesita un barrio!' })}
             onChange={(e) =>
-              setSelectedMunicipalityId(parseInt(e.target.value))
+              setSelectedNeighborhoodId(parseInt(e.target.value))
             }
           >
             {municipalities &&
@@ -139,7 +151,7 @@ export const UpdateSurveyedModal = () => {
               municipalities
                 .find(
                   (x) =>
-                    x.id === Number(respondent?.neighborhood.municipality.id)
+                    x.id === selectedMunicipalityId
                 )
                 ?.neighborhoods.map((neighborhood) => (
                   <option key={neighborhood.id} value={neighborhood.id}>
@@ -182,34 +194,26 @@ export const UpdateSurveyedModal = () => {
           </select>
           <label htmlFor='pollingStation'>Puesto de Votación</label>
           <select
-            defaultValue={respondent?.votingTableId.pollingStation.id || ""}
+            value={selectedPollingStationId || respondent?.votingTableId.pollingStation.id}
             className="form-control"
             id="pollingStation"
             {...register('pollingStation', { required: 'Necesita un puesto de votación!' })}
-            onChange={(e) => console.log(e.target.value)}
+            onChange={
+              (e) => setSelectedPollingStationId(parseInt(e.target.value))
+            }
           >
-            {votingMunicipalities &&
-            respondent?.votingTableId.pollingStation.votingMunicipality.id !==
-              undefined ? (
+            {
               votingMunicipalities
                 .find(
                   (x) =>
-                    x.id ===
-                    Number(
-                      respondent?.votingTableId.pollingStation.votingMunicipality
-                        .id
-                    )
+                    x.id === selectedVotingMunicipality
                 )
                 ?.pollingStations.map((pollingStation) => (
                   <option key={pollingStation.id} value={pollingStation.id}>
                     {pollingStation.name}
                   </option>
                 ))
-            ) : (
-              <option value={respondent?.votingTableId.pollingStation.id || ""}>
-                Seleccione un puesto de votación
-              </option>
-            )}
+            }
           </select>
           <label htmlFor='votingTable'>Mesa de Votación</label>
           <input

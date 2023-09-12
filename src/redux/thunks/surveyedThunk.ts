@@ -35,8 +35,8 @@ export const fetchSurveyed =
     }
   }
 
-export const fetchSurveyedById = 
-  (id: number): Thunk => 
+export const fetchSurveyedById =
+  (id: number): Thunk =>
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
