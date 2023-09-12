@@ -66,10 +66,10 @@ export const UpdateSurveyedModal = () => {
   } = useForm();
 
   const handleSubmitUpdateForm = async (data: any) => {
-    debugger
     data = {
       ...data,
       phoneNumber: data.phoneNumber,
+      neighborhoodId: data.neighborhoodId,
     }
     await dispatch(updateSurveyed(data, respondent.id))
     dispatch(setOpenModalUpdateRespondent(false))
