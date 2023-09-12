@@ -104,7 +104,7 @@ export const updateSurveyed =
   (surveyed: UpdateSurveyed, surveyedId: number): Thunk =>
   async (dispatch) => {
     dispatch(setLoading(true));
-    
+
     try {
       const userLogged = JSON.parse(localStorage.getItem('user') || '{}');
       surveyed = {
@@ -116,7 +116,7 @@ export const updateSurveyed =
         neighborhoodId: surveyed.neighborhoodId,
         votingTable: surveyed.votingTable,
       }
-  
+
       console.log({"surveyedBeforePut": surveyed})
       const response = await axios.put(`${apiUrl}/surveyed/${surveyedId}`, surveyed, {
         headers: {
