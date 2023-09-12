@@ -4,6 +4,7 @@ import {
   setLoading, 
   setSurveyed, 
   updateListSurveyed, 
+  setOpenModalUpdateRespondent, 
   updateListSurveyedAction,
   updateListSurveyedAfterDelete
 } from '../slices/surveyedSlice';
@@ -47,6 +48,7 @@ export const fetchSurveyedById =
       });
       const respondent = response.data as SurveyedResponse;
       dispatch(selectedRespondent(respondent));
+      dispatch(setOpenModalUpdateRespondent(true));
       return response;
     } catch (error) {
       return error;
@@ -156,25 +158,3 @@ export const deleteSurveyed =
       dispatch(setLoading(false));
     }
   }
-
-/* export const updateSurveyed =
-  (surveyed: UpdateSurveyed, surveyedId: number): Thunk =>
-  async (dispatch) =>
-    dispatch(setLoading(true));
-    try {
-      const response = await axios.put(`${apiUrl}/surveyed/${surveyedId}`, surveyed, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
-        }
-      })
-      const respondent = response.data as SurveyedResponse;
-      dispatch(updateListSureveyed(respondent));
-      dispatch(setOpenModalCreateRespondent(true));
-      return response;
-    } catch (error) {
-        return error;
-  } finally {
-      dispatch(setLoading(false));
-  }
-} */
