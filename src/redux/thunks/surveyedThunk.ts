@@ -69,9 +69,10 @@ export const fetchSurveyedById =
         name: surveyed.name,
         phoneNumber: surveyed.phoneNumber,
         userId: userLogged.id,
-        neighborhoodId: 4,
-        votingTable: 4
+        neighborhoodId: surveyed.neighborhoodId,
+        votingTable: surveyed.votingTable
       }
+      console.log({"surveyedCreate": surveyed})
 
       const response = await axios.post(`${apiUrl}/surveyed`, surveyed, {
         headers: {
@@ -110,9 +111,11 @@ export const updateSurveyed =
       name: surveyed.name,
       phoneNumber: surveyed.phoneNumber,
       userId: userLogged.id,
-      neighborhoodId: 4,
-      votingTable: 4,
+      neighborhoodId: surveyed.neighborhoodId,
+      votingTable: surveyed.votingTable,
     }
+
+    console.log({"surveyedBeforePut": surveyed})
 
     try {
       const response = await axios.put(`${apiUrl}/surveyed/${surveyedId}`, surveyed, {

@@ -69,11 +69,10 @@ export const UpdateSurveyedModal = () => {
     data = {
       ...data,
       phoneNumber: data.phoneNumber,
-      neighborhoodId: 4,
+      neighborhoodId: data.neighborhoodId
     }
     dispatch(updateSurveyed(data, respondent.id))
     dispatch(setOpenModalUpdateRespondent(false))
-    console.log(data)
   }
 
   return (
@@ -88,28 +87,32 @@ export const UpdateSurveyedModal = () => {
             id='name'
             placeholder='Nombre'
             defaultValue={respondent?.name}
-            {...register('name', { required: 'name is required!' })}
+            {...register('name', { required: 'Necesita un nombre!' })}
           />
           <label htmlFor='phoneNumber'>Celular</label>
           <input
             type="text"
             className="form-control"
             placeholder="telefono"
+            id="phoneNumber"
             defaultValue={respondent?.phoneNumber}
-            {...register('phoneNumber', { required: 'phoneNumber is required!' })}
+            {...register('phoneNumber', { required: 'Necesita un número de celular!' })}
           />
           <label htmlFor='identityCard'>Cédula</label>
           <input
             type="text"
             className="form-control"
             placeholder="cedula"
+            id="identityCard"
             defaultValue={respondent?.identityCard}
-            {...register('identityCard', { required: 'identityCard is required!' })}
+            {...register('identityCard', { required: 'Necesita un número de cédula!' })}
           />
           <label htmlFor='municipality'>Municipio</label>
           <select
             defaultValue={respondent?.neighborhood.municipality.id}
             className="form-control"
+            id="municipality"
+            {...register('municipality', { required: 'Necesita un municipio!' })}
             onChange={(e) =>
               setSelectedMunicipalityId(parseInt(e.target.value))
             }
@@ -125,7 +128,11 @@ export const UpdateSurveyedModal = () => {
           <select
             defaultValue={respondent?.neighborhood.id || ""}
             className="form-control"
-            onChange={(e) => console.log(e.target.value)}
+            id="neighborhood"
+            {...register('neighborhood', { required: 'Necesita un barrio!' })}
+            onChange={(e) =>
+              setSelectedMunicipalityId(parseInt(e.target.value))
+            }
           >
             {municipalities &&
             respondent?.neighborhood.municipality.id !== undefined ? (
@@ -150,8 +157,9 @@ export const UpdateSurveyedModal = () => {
             type="text"
             className="form-control"
             placeholder="direccion"
+            id="address"
             defaultValue={respondent?.address}
-            {...register('address', { required: 'address is required!' })}
+            {...register('address', { required: 'Necesita una dirección!' })}
           />
           <label htmlFor='votingMunicipality'>Municipio de Votación</label>
           <select
@@ -159,6 +167,8 @@ export const UpdateSurveyedModal = () => {
               respondent?.votingTableId.pollingStation.votingMunicipality.id
             }
             className="form-control"
+            id="votingMunicipality"
+            {...register('votingMunicipality', { required: 'Necesita un municipio de votación!' })}
             onChange={(e) =>
               setSelectedVotingMunicipalityId(parseInt(e.target.value))
             }
@@ -174,9 +184,9 @@ export const UpdateSurveyedModal = () => {
           <select
             defaultValue={respondent?.votingTableId.pollingStation.id || ""}
             className="form-control"
-            onChange={(e) =>
-              setSelectedVotingMunicipalityId(parseInt(e.target.value))
-            }
+            id="pollingStation"
+            {...register('pollingStation', { required: 'Necesita un puesto de votación!' })}
+            onChange={(e) => console.log(e.target.value)}
           >
             {votingMunicipalities &&
             respondent?.votingTableId.pollingStation.votingMunicipality.id !==
@@ -200,15 +210,15 @@ export const UpdateSurveyedModal = () => {
                 Seleccione un puesto de votación
               </option>
             )}
-            {console.log(votingMunicipalities)}
           </select>
           <label htmlFor='votingTable'>Mesa de Votación</label>
           <input
             type="text"
             className="form-control"
             placeholder="mesa de votacion"
+            id="votingTable"
             defaultValue={respondent?.votingTableId.id}
-            {...register('votingTable', { required: 'votingTable is required!' })}
+            {...register('votingTable', { required: 'Necesita una mesa de votación!' })}
           />
             <button className="btn btn-primary"type="submit">actualizar</button>
         </form>
