@@ -65,13 +65,13 @@ export const UpdateSurveyedModal = () => {
     formState: { errors },
   } = useForm();
 
-  const handleSubmitCreateRespondent = async (data: any) => {
+  const handleSubmitUpdateForm = async (data: any) => {
+    debugger
     data = {
       ...data,
       phoneNumber: data.phoneNumber,
-      neighborhoodId: data.neighborhoodId
     }
-    dispatch(updateSurveyed(data, respondent.id))
+    await dispatch(updateSurveyed(data, respondent.id))
     dispatch(setOpenModalUpdateRespondent(false))
   }
 
@@ -79,7 +79,7 @@ export const UpdateSurveyedModal = () => {
     <Modal isOpen={openModalUpdateRespondent}>
       <ModalHeader>Actualizar Encuestado</ModalHeader>
       <ModalBody>
-        <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(handleSubmitCreateRespondent)}>
+        <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(handleSubmitUpdateForm)}>
         <label htmlFor='name'>Nombre</label>
           <input
             type='text'

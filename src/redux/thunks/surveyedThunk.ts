@@ -104,20 +104,20 @@ export const updateSurveyed =
   (surveyed: UpdateSurveyed, surveyedId: number): Thunk =>
   async (dispatch) => {
     dispatch(setLoading(true));
-    const userLogged = JSON.parse(localStorage.getItem('user') || '{}');
-    surveyed = {
-      address: surveyed.address,
-      identityCard: surveyed.identityCard,
-      name: surveyed.name,
-      phoneNumber: surveyed.phoneNumber,
-      userId: userLogged.id,
-      neighborhoodId: surveyed.neighborhoodId,
-      votingTable: surveyed.votingTable,
-    }
-
-    console.log({"surveyedBeforePut": surveyed})
-
+    
     try {
+      const userLogged = JSON.parse(localStorage.getItem('user') || '{}');
+      surveyed = {
+        address: surveyed.address,
+        identityCard: surveyed.identityCard,
+        name: surveyed.name,
+        phoneNumber: surveyed.phoneNumber,
+        userId: userLogged.id,
+        neighborhoodId: surveyed.neighborhoodId,
+        votingTable: surveyed.votingTable,
+      }
+  
+      console.log({"surveyedBeforePut": surveyed})
       const response = await axios.put(`${apiUrl}/surveyed/${surveyedId}`, surveyed, {
         headers: {
           'Content-Type': 'application/json',
