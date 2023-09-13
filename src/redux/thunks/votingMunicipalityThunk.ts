@@ -4,7 +4,7 @@ import { Thunk } from '../store';
 import { apiUrl } from '../../constants';
 import { VotingMunicipalityResponse } from '../interfaces/votingMunicipalityInterface';
 
-export const fetchVotingMunicipalityies =
+export const fetchVotingMunicipalities =
   (): Thunk =>
   async (dispatch) => {
     dispatch(setLoading(true));

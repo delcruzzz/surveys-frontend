@@ -7,7 +7,7 @@ import { setOpenModalUpdateRespondent } from "../../redux/slices/surveyedSlice";
 import { useEffect, useState } from "react";
 import { fetchMunicipalities } from "../../redux/thunks/municipalitiesThunk";
 import { fetchNeighborhoods } from "../../redux/thunks/neighborhoodsThunk";
-import { fetchVotingMunicipalityies } from "../../redux/thunks/votingMunicipalityThunk";
+import { fetchVotingMunicipalities } from "../../redux/thunks/votingMunicipalityThunk";
 import { fetchPollingStations } from "../../redux/thunks/pollingStationsThunk";
 import { fetchVotingTables } from "../../redux/thunks/votingTablesThunk";
 import { useForm } from 'react-hook-form';
@@ -51,7 +51,7 @@ export const UpdateSurveyedModal = () => {
       neighborhoodId: Number(data.neighborhood),
       votingTable: data.votingTable
     }
-    dispatch(updateSurveyed(data, respondent.id))
+    await dispatch(updateSurveyed(data, respondent.id))
     dispatch(setOpenModalUpdateRespondent(false))
   }
 
@@ -60,6 +60,7 @@ export const UpdateSurveyedModal = () => {
     dispatch(fetchVotingTables(selectedPollingStationId))
     dispatch(fetchNeighborhoods(selectedMunicipalityId))
     dispatch(fetchPollingStations(selectedVotingMunicipality))
+    dispatch(fetchVotingMunicipalities())
   }, [dispatch, selectedPollingStationId, selectedMunicipalityId, selectedVotingMunicipality]);
 
   console.log({votingTables})
@@ -116,7 +117,7 @@ export const UpdateSurveyedModal = () => {
           </select>
           <label htmlFor='neighborhood'>Barrio</label>
           <select
-            defaultValue={respondent?.neighborhood.id || ""}
+            defaultValue={respondent.neighborhood.id || ""}
             className="form-control"
             id="neighborhood"
             {...register('neighborhood', { required: 'Necesita un barrio!' })}

@@ -8,6 +8,7 @@ import { fetchMunicipalities } from "../../redux/thunks/municipalitiesThunk";
 import { fetchVotingTables } from '../../redux/thunks/votingTablesThunk';
 import { fetchPollingStations } from '../../redux/thunks/pollingStationsThunk';
 import { fetchNeighborhoods } from '../../redux/thunks/neighborhoodsThunk';
+import { fetchVotingMunicipalities } from '../../redux/thunks/votingMunicipalityThunk';
 
 export const CreateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
@@ -48,6 +49,7 @@ export const CreateSurveyedModal = () => {
     }
     dispatch(createSurveyed(data))
     dispatch(setOpenModalCreateRespondent(false))
+    window.location.replace('')
   }
 
   useEffect(() => {
@@ -55,6 +57,7 @@ export const CreateSurveyedModal = () => {
     dispatch(fetchVotingTables(selectedPollingStationId))
     dispatch(fetchNeighborhoods(selectedMunicipalityId))
     dispatch(fetchPollingStations(selectedVotingMunicipality))
+    dispatch(fetchVotingMunicipalities())
   }, [dispatch, selectedPollingStationId, selectedMunicipalityId, selectedVotingMunicipality]);
 
   console.log({votingTables})
@@ -177,7 +180,7 @@ export const CreateSurveyedModal = () => {
           </select>
           <label htmlFor='votingTable'>Mesa de Votación</label>
           <select
-            defaultValue={"Seleccione un puesto de votación"}
+            defaultValue="Seleccione un puesto de votación"
             className="form-control"
             id='votingTable'
             {...register('votingTable', { required: 'Necesita una mesa de votación...' })}
