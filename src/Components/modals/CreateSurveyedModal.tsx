@@ -5,6 +5,9 @@ import { setOpenModalCreateRespondent } from '../../redux/slices/surveyedSlice';
 import { useForm } from 'react-hook-form';
 import { createSurveyed } from '../../redux/thunks/surveyedThunk';
 import { fetchMunicipalities } from "../../redux/thunks/municipalitiesThunk";
+import { fetchVotingTables } from '../../redux/thunks/votingTablesThunk';
+import { fetchPollingStations } from '../../redux/thunks/pollingStationsThunk';
+import { fetchNeighborhoods } from '../../redux/thunks/neighborhoodsThunk';
 
 export const CreateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
@@ -12,7 +15,10 @@ export const CreateSurveyedModal = () => {
   const { votingMunicipalities } = useCustomSelector(
     (state) => state.votingMunicipalities
   );
-  const { openModalUpdateRespondent, respondent } = useCustomSelector(
+  const { neighborhoods } = useCustomSelector((state) => state.neighborhoods)
+  const { pollingStations } = useCustomSelector((state) => state.pollingStation)
+  const { votingTables } = useCustomSelector((state) => state.votingTable)
+  const { respondent } = useCustomSelector(
     (state) => state.surveyed
   );
   const [selectedPollingStationId, setSelectedPollingStationId] = useState(
@@ -30,22 +36,29 @@ export const CreateSurveyedModal = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  console.log()
 
   const handleSubmitCreateRespondent = async (data: any, e: any) => {
     e.preventDefault();
     data = {
       ...data,
       phoneNumber: data.phoneNumber,
-      neighborhoodId: data.neighborhood,
+      neighborhoodId: Number(data.neighborhood),
+      votingTable: data.votingTable
     }
     dispatch(createSurveyed(data))
     dispatch(setOpenModalCreateRespondent(false))
-    window.location.replace('');
   }
 
   useEffect(() => {
     dispatch(fetchMunicipalities());
-  }, [dispatch]);
+    dispatch(fetchVotingTables(selectedPollingStationId))
+    dispatch(fetchNeighborhoods(selectedMunicipalityId))
+    dispatch(fetchPollingStations(selectedVotingMunicipality))
+  }, [dispatch, selectedPollingStationId, selectedMunicipalityId, selectedVotingMunicipality]);
+
+  console.log({votingTables})
+  console.log({neighborhoods})
 
   return (
     <Modal
@@ -118,23 +131,7 @@ export const CreateSurveyedModal = () => {
             {...register('neighborhood', { required: 'Necesita un barrio...' })}
             onChange={(e) => console.log(e.target.value)}
           >
-            {municipalities &&
-            respondent?.neighborhood.municipality.id !== undefined ? (
-              municipalities
-                .find(
-                  (x) =>
-                    x.id === selectedMunicipalityId
-                )
-                ?.neighborhoods.map((neighborhood) => (
-                  <option key={neighborhood.id} value={neighborhood.id}>
-                    {neighborhood.name}
-                  </option>
-                ))
-            ) : (
-              <option value={""}>
-                Seleccione un barrio
-              </option>
-            )}
+            {neighborhoods.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
           </select>
           <label htmlFor='address'>Dirección</label>
           <input
@@ -170,38 +167,24 @@ export const CreateSurveyedModal = () => {
           <select
             defaultValue={"Seleccione un puesto de votación"}
             className="form-control"
+            id='pollingStation'
+            {...register('pollingStation', { required: 'Necesita un puesto de votación...' })}
             onChange={
               (e) => setSelectedPollingStationId(parseInt(e.target.value))
             }
           >
-            {votingMunicipalities &&
-            respondent?.votingTableId.pollingStation.votingMunicipality.id !==
-              undefined ? (
-              votingMunicipalities
-                .find(
-                  (x) =>
-                    x.id ===
-                    selectedVotingMunicipality
-                )
-                ?.pollingStations.map((pollingStation) => (
-                  <option key={pollingStation.id} value={pollingStation.id}>
-                    {pollingStation.name}
-                  </option>
-                ))
-            ) : (
-              <option value={""}>
-                Seleccione un puesto de votación
-              </option>
-            )}
+            {pollingStations.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
           </select>
           <label htmlFor='votingTable'>Mesa de Votación</label>
-          <input
-            type="text"
+          <select
+            defaultValue={"Seleccione un puesto de votación"}
             className="form-control"
-            placeholder="mesa de votacion"
-            defaultValue={1}
+            id='votingTable'
             {...register('votingTable', { required: 'Necesita una mesa de votación...' })}
-          />
+            onChange={(e) => console.log(e.target.value)}
+          >
+            {votingTables.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
+          </select>
           <button className='btn btn-primary' type='submit'>agregar</button>
         </form>
       </ModalBody>

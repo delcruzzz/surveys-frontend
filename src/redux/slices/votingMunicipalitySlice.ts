@@ -8,6 +8,7 @@ const initialState: VotingMunicipalityState = {
     id: 0,
     name: '',
     pollingStations: [],
+    votingTable: [],
   },
 }
 
