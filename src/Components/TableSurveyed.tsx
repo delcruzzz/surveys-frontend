@@ -23,7 +23,7 @@ export const TableSurveyed = () => {
           <th>BARRIO</th>
           <th>DIRECCION</th>
           <th>MUNICIPIO</th>
-          <th>PUESTO VOTACION</th>
+          <th>P. VOTACION</th>
           <th>MESA</th>
           <th>ACCIONES</th>
         </tr>

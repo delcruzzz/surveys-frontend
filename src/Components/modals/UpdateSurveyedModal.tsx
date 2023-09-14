@@ -53,6 +53,11 @@ export const UpdateSurveyedModal = () => {
     window.location.replace('');
   }
 
+  const handleCancelUpdate = () => {
+    dispatch(setOpenModalUpdateRespondent(false))
+    window.location.replace('')
+  }
+
   useEffect(() => {
     dispatch(fetchMunicipalities());
     dispatch(fetchVotingTables(selectedPollingStationId))
@@ -115,7 +120,7 @@ export const UpdateSurveyedModal = () => {
           </select>
           <label htmlFor='neighborhood'>Barrio</label>
           <select
-            defaultValue={respondent.neighborhood.id || ""}
+            defaultValue={respondent.neighborhood.id}
             className="form-control"
             id="neighborhood"
             {...register('neighborhood', { required: 'Necesita un barrio!' })}
@@ -179,7 +184,7 @@ export const UpdateSurveyedModal = () => {
       <ModalFooter>
         <button
           className="btn btn-danger"
-          onClick={() => dispatch(setOpenModalUpdateRespondent(false))}
+          onClick={handleCancelUpdate}
         >
           cancelar
         </button>

@@ -9,7 +9,7 @@ import { fetchVotingTables } from '../../redux/thunks/votingTablesThunk';
 import { fetchPollingStations } from '../../redux/thunks/pollingStationsThunk';
 import { fetchNeighborhoods } from '../../redux/thunks/neighborhoodsThunk';
 import { fetchVotingMunicipalities } from '../../redux/thunks/votingMunicipalityThunk';
-import "bootswatch/dist/litera/bootstrap.min.css"
+//import "bootswatch/dist/litera/bootstrap.min.css"
 
 export const CreateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
@@ -51,6 +51,7 @@ export const CreateSurveyedModal = () => {
     dispatch(setOpenModalCreateRespondent(false))
     window.location.replace('')
   }
+
 
   useEffect(() => {
     dispatch(fetchMunicipalities());
@@ -192,7 +193,9 @@ export const CreateSurveyedModal = () => {
       <ModalFooter>
         <button 
           className='btn btn-danger'
-          onClick={() => dispatch(setOpenModalCreateRespondent(false))}
+          onClick={() => {
+            dispatch(setOpenModalCreateRespondent(false))
+          }}
         >
           cancelar
         </button>
