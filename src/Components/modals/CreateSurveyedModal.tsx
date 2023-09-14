@@ -9,6 +9,7 @@ import { fetchVotingTables } from '../../redux/thunks/votingTablesThunk';
 import { fetchPollingStations } from '../../redux/thunks/pollingStationsThunk';
 import { fetchNeighborhoods } from '../../redux/thunks/neighborhoodsThunk';
 import { fetchVotingMunicipalities } from '../../redux/thunks/votingMunicipalityThunk';
+import "bootswatch/dist/litera/bootstrap.min.css"
 
 export const CreateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
@@ -37,7 +38,6 @@ export const CreateSurveyedModal = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log()
 
   const handleSubmitCreateRespondent = async (data: any, e: any) => {
     e.preventDefault();
@@ -60,14 +60,12 @@ export const CreateSurveyedModal = () => {
     dispatch(fetchVotingMunicipalities())
   }, [dispatch, selectedPollingStationId, selectedMunicipalityId, selectedVotingMunicipality]);
 
-  console.log({votingTables})
-  console.log({neighborhoods})
 
   return (
     <Modal
       isOpen={openModalCreateRespondent}
     >
-      <ModalHeader>Crear Encuestado</ModalHeader>
+      <ModalHeader className="bg-primary text-white">Crear Encuestado</ModalHeader>
       <ModalBody>
         <form className='d-flex flex-column gap-3' onSubmit={handleSubmit(handleSubmitCreateRespondent)}>
           <label htmlFor='name'>Nombre</label>

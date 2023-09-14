@@ -12,7 +12,6 @@ import { fetchPollingStations } from "../../redux/thunks/pollingStationsThunk";
 import { fetchVotingTables } from "../../redux/thunks/votingTablesThunk";
 import { useForm } from 'react-hook-form';
 import { updateSurveyed } from "../../redux/thunks/surveyedThunk";
-import { fetchSurveyedById } from '../../redux/thunks/surveyedThunk';
 
 export const UpdateSurveyedModal = () => {
   const dispatch = useCustomDispatch();
@@ -39,9 +38,7 @@ export const UpdateSurveyedModal = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
-  console.log()
 
   const handleSubmitUpdateForm = async (data: any, e: any) => {
     e.preventDefault();
@@ -53,6 +50,7 @@ export const UpdateSurveyedModal = () => {
     }
     await dispatch(updateSurveyed(data, respondent.id))
     dispatch(setOpenModalUpdateRespondent(false))
+    window.location.replace('');
   }
 
   useEffect(() => {
@@ -63,14 +61,13 @@ export const UpdateSurveyedModal = () => {
     dispatch(fetchVotingMunicipalities())
   }, [dispatch, selectedPollingStationId, selectedMunicipalityId, selectedVotingMunicipality]);
 
-  console.log({votingTables})
-  console.log({neighborhoods})
 
   return (
     <Modal isOpen={openModalUpdateRespondent}>
-      <ModalHeader>Actualizar Encuestado</ModalHeader>
+      <ModalHeader className="bg-primary text-white">Actualizar Encuestado</ModalHeader>
       <ModalBody>
         <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(handleSubmitUpdateForm)}>
+        <div className="form-group">
         <label htmlFor='name'>Nombre</label>
           <input
             type='text'
@@ -80,6 +77,7 @@ export const UpdateSurveyedModal = () => {
             defaultValue={respondent?.name}
             {...register('name', { required: 'Necesita un nombre!' })}
           />
+          </div>
           <label htmlFor='phoneNumber'>Celular</label>
           <input
             type="text"

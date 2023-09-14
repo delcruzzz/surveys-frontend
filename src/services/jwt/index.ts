@@ -12,8 +12,8 @@ export const jwtAxios = axios.create({
 jwtAxios.interceptors.response.use(
   (res: AxiosResponse<any, any>) => res,
   (err: any) => {
-    if (err.response && err.response.data.msg === 'Token is not valid') {
-      console.log('Need to logout user');
+    if (err.response && err.response.data.msg === 'El token no es válido') {
+      console.log('Necesidad de cerrar sesión de usuario');
     }
     return Promise.reject(err);
   }

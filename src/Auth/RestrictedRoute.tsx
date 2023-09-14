@@ -7,7 +7,7 @@ const RestrictedRoute = (props:any) => {
   const token = localStorage.getItem('auth');
 
   console.log('token',token);
- 
+
   return <>{!token ? <Route {...props} /> : <Redirect to='/' />}</>;
 
 };

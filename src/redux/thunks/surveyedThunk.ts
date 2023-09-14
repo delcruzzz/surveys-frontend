@@ -72,7 +72,6 @@ export const fetchSurveyedById =
         neighborhoodId: surveyed.neighborhoodId,
         votingTable: surveyed.votingTable
       }
-      console.log({"surveyedCreate": surveyed})
 
       const response = await axios.post(`${apiUrl}/surveyed`, surveyed, {
         headers: {
@@ -117,7 +116,6 @@ export const updateSurveyed =
         votingTable: surveyed.votingTable,
       }
 
-      console.log({"surveyedBeforePut": surveyed})
       const response = await axios.put(`${apiUrl}/surveyed/${surveyedId}`, surveyed, {
         headers: {
           'Content-Type': 'application/json',
