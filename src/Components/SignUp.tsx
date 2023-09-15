@@ -139,6 +139,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
                       </p>
                     )}
                   </div>
+                  <label className="form-label text-center">Selecciona tu Cargo:</label>
                   {[{id: 1, name: 'Líder'}, {id: 2, name: 'Encuestador'}].map((item) => (
                     <div key={item.id}>
                       <label>
