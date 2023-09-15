@@ -7,7 +7,17 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { apiUrl } from "../constants";
 
 type SomeComponentProps = RouteComponentProps;
-const SignUp: FC<SomeComponentProps> = ({ history }) => {
+const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
+  const [selectedRoles, setSelectedRoles] = useState([]);
+
+  const toggleRole = (role: number) => {
+    if (selectedRoles.includes(role as never)) {
+      setSelectedRoles(selectedRoles.filter((item) => item !== role));
+    } else {
+      setSelectedRoles([...selectedRoles, role as never]);
+    }
+  }
+
   const {
     register,
     handleSubmit,
@@ -20,7 +30,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
       cellPhoneNumber: data.cellPhoneNumber,
       identityCard: data.identityCard,
       password: data.password,
-      rolesId: [1,2],
+      rolesId: selectedRoles,
     };
     axios
       .post(`${apiUrl}/users`, params)
@@ -129,6 +139,18 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
                       </p>
                     )}
                   </div>
+                  {[{id: 1, name: 'Líder'}, {id: 2, name: 'Encuestador'}].map((item) => (
+                    <div key={item.id}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value={item.id}
+                          onChange={() => toggleRole(item.id)}
+                        />
+                        {item.name}
+                      </label>
+                    </div>
+                  ))}
                   <div className="text-center mt-4 ">
                     <button
                       className="btn btn-outline-primary text-center shadow-none mb-3"
