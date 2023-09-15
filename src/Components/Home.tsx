@@ -28,7 +28,7 @@ const Home: FC<JSX.Element[]> = () => {
         }}
       >
         <div>
-        <h2 className='m-3 '><p><b>LIDER: {userLogged.name} CEL: {userLogged.cellPhoneNumber} CC: {userLogged.identityCard}</b></p></h2>
+        <h2 className='m-3 '><p style={{ fontSize: 18 }}><b>LIDER: {userLogged.name} CEL: {userLogged.cellPhoneNumber} CC: {userLogged.identityCard}</b></p></h2>
         </div>
         <div>
           <button type='submit' className='butn' onClick={logout}>

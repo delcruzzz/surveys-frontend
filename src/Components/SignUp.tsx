@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { ToastContainer, toast, Flip } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-import { apiUrl } from '../constants';
+import React, { FC, useState} from "react";
+import { Link, RouteComponentProps } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+import { apiUrl } from "../constants";
 
 type SomeComponentProps = RouteComponentProps;
 const SignUp: FC<SomeComponentProps> = ({ history }) => {
@@ -20,24 +20,24 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
       cellPhoneNumber: data.cellPhoneNumber,
       identityCard: data.identityCard,
       password: data.password,
-      rolesId: [1, 2]
+      rolesId: [1,2],
     };
     axios
       .post(`${apiUrl}/users`, params)
       .then(function (response) {
         toast.success(response.data.message, {
-          position: 'top-right',
+          position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: false,
           progress: 0,
-          toastId: 'my_toast',
+          toastId: "my_toast",
         });
         reset();
         setTimeout(() => {
-          history.push('/login');
+          history.push("/login");
         }, 3000);
       })
 
@@ -47,95 +47,98 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
   };
   return (
     <>
-      <div className='container'>
+      <div className="container">
         <div
-          className='row d-flex justify-content-center align-items-center'
-          style={{ height: '100vh' }}
+          className="row d-flex justify-content-center align-items-center"
+          style={{ height: "100vh" }}
         >
-          <div className='card mb-3 mt-3 rounded' style={{ maxWidth: '500px' }}>
-            <div className='col-md-12'>
-              <div className='card-body'>
-                <h3 className='card-title text-center text-secondary mt-3 mb-3'>
+          <div className="card mb-3 mt-3 rounded" style={{ maxWidth: "500px" }}>
+            <div className="col-md-12">
+              <div className="card-body">
+                <h3 className="card-title text-center text-secondary mt-3 mb-3">
                   Formulario de Registro
                 </h3>
                 <form
-                  className='row'
-                  autoComplete='off'
+                  className="row"
+                  autoComplete="off"
                   onSubmit={handleSubmit(submitData)}
                 >
-                    <div className=''>
-                      <label className='form-label'>Nombre completo</label>
-                      <input
-                        type='text'
-                        className='form-control form-control-sm'
-                        id='exampleFormControlInput1'
-                        {...register('name', {
-                          required: 'name is required!',
-                        })}
-                      />
-                      {errors.name && (
-                        <p className='text-danger' style={{ fontSize: 14 }}>
-                          {errors.name.message}
-                        </p>
-                      )}
+                  <div className="">
+                    <label className="form-label">Nombre completo</label>
+                    <input
+                      type="text"
+                      className="form-control form-control-sm"
+                      id="exampleFormControlInput1"
+                      {...register("name", {
+                        required: "Nombre es requerido!",
+                      })}
+                    />
+                    {errors.name && (
+                      <p className="text-danger" style={{ fontSize: 14 }}>
+                        {errors.name.message}
+                      </p>
+                    )}
                   </div>
 
-                  <div className=''>
-                    <label className='form-label'>Número de Celular</label>
+                  <div className="">
+                    <label className="form-label">Número de Celular</label>
                     <input
-                      type='cellPhoneNumber'
-                      className='form-control form-control-sm'
-                      id='exampleFormControlInput3'
-                      {...register('cellPhoneNumber', { required: 'cellPhoneNumber is required!' })}
+                      type="cellPhoneNumber"
+                      className="form-control form-control-sm"
+                      id="exampleFormControlInput3"
+                      {...register("cellPhoneNumber", {
+                        required: "Número de célular es requerido!",
+                      })}
                     />
                     {errors.cellPhoneNumber && (
-                      <p className='text-danger' style={{ fontSize: 14 }}>
+                      <p className="text-danger" style={{ fontSize: 14 }}>
                         {errors.cellPhoneNumber.message}
                       </p>
                     )}
                   </div>
 
-                  <div className=''>
-                    <label className='form-label'>Número de Cédula</label>
+                  <div className="">
+                    <label className="form-label">Número de Cédula</label>
                     <input
-                      type='text'
-                      className='form-control form-control-sm'
-                      id='exampleFormControlInput3'
-                      {...register('identityCard', { required: 'identityCard is required!' })}
+                      type="text"
+                      className="form-control form-control-sm"
+                      id="exampleFormControlInput3"
+                      {...register("identityCard", {
+                        required: "Cédula es requerida!",
+                      })}
                     />
                     {errors.identityCard && (
-                      <p className='text-danger' style={{ fontSize: 14 }}>
+                      <p className="text-danger" style={{ fontSize: 14 }}>
                         {errors.identityCard.message}
                       </p>
                     )}
                   </div>
-                  <div className=''>
-                    <label className='form-label'>Contraseña</label>
+                  <div className="">
+                    <label className="form-label">Contraseña</label>
                     <input
-                      type='password'
-                      className='form-control form-control-sm'
-                      id='exampleFormControlInput5'
-                      {...register('password', {
-                        required: 'Password is required!',
+                      type="password"
+                      className="form-control form-control-sm"
+                      id="exampleFormControlInput5"
+                      {...register("password", {
+                        required: "Contraseña es requerida!",
                       })}
                     />
                     {errors.password && (
-                      <p className='text-danger' style={{ fontSize: 14 }}>
+                      <p className="text-danger" style={{ fontSize: 14 }}>
                         {errors.password.message}
                       </p>
                     )}
                   </div>
-
-                  <div className='text-center mt-4 '>
+                  <div className="text-center mt-4 ">
                     <button
-                      className='btn btn-outline-primary text-center shadow-none mb-3'
-                      type='submit'
+                      className="btn btn-outline-primary text-center shadow-none mb-3"
+                      type="submit"
                     >
                       Registrase
                     </button>
-                    <p className='card-text'>
-                      Ya tienes una cuenta?{' '}
-                      <Link style={{ textDecoration: 'none' }} to={'/login'}>
+                    <p className="card-text">
+                      Ya tienes una cuenta?{" "}
+                      <Link style={{ textDecoration: "none" }} to={"/login"}>
                         Inicio de Sesión
                       </Link>
                     </p>
@@ -147,7 +150,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
         </div>
       </div>
       <ToastContainer
-        position='top-right'
+        position="top-right"
         autoClose={5000}
         hideProgressBar
         closeOnClick
