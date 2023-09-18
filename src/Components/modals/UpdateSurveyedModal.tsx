@@ -60,12 +60,21 @@ export const UpdateSurveyedModal = () => {
 
   useEffect(() => {
     dispatch(fetchMunicipalities());
-    dispatch(fetchVotingTables(selectedPollingStationId))
-    dispatch(fetchNeighborhoods(selectedMunicipalityId))
-    dispatch(fetchPollingStations(selectedVotingMunicipality))
+    dispatch(fetchVotingTables(selectedPollingStationId || respondent.votingTableId.pollingStation.id))
+    dispatch(fetchNeighborhoods(selectedMunicipalityId || respondent.neighborhood.municipality.id))
+    dispatch(fetchPollingStations(selectedVotingMunicipality || respondent.votingTableId.pollingStation.votingMunicipality.id))
     dispatch(fetchVotingMunicipalities())
-  }, [dispatch, selectedPollingStationId, selectedMunicipalityId, selectedVotingMunicipality]);
+  }, [
+    dispatch, 
+    selectedPollingStationId, 
+    selectedMunicipalityId, 
+    selectedVotingMunicipality,
+    respondent.neighborhood.municipality.id,
+    respondent.votingTableId.pollingStation.id,
+    respondent.votingTableId.pollingStation.votingMunicipality.id
+  ]);
 
+  console.log({respondent})
 
   return (
     <Modal isOpen={openModalUpdateRespondent}>
@@ -103,10 +112,10 @@ export const UpdateSurveyedModal = () => {
           />
           <label htmlFor='municipality'>Municipio</label>
           <select
-            defaultValue={respondent?.neighborhood.municipality.id}
             className="form-control"
             id="municipality"
             {...register('municipality', { required: 'Necesita un municipio!' })}
+            defaultValue={respondent.neighborhood.municipality.id}
             onChange={(e) =>
               setSelectedMunicipalityId(parseInt(e.target.value))
             }
@@ -120,13 +129,13 @@ export const UpdateSurveyedModal = () => {
           </select>
           <label htmlFor='neighborhood'>Barrio</label>
           <select
-            defaultValue={respondent.neighborhood.id}
             className="form-control"
             id="neighborhood"
             {...register('neighborhood', { required: 'Necesita un barrio!' })}
+            defaultValue={respondent.neighborhood.id}
             onChange={(e) => console.log(e.target.value)}
           >
-            {neighborhoods.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
+            {neighborhoods.length && neighborhoods.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
           </select>
           <label htmlFor='address'>Dirección</label>
           <input
@@ -134,17 +143,17 @@ export const UpdateSurveyedModal = () => {
             className="form-control"
             placeholder="direccion"
             id="address"
-            defaultValue={respondent?.address}
+            defaultValue={respondent.address}
             {...register('address', { required: 'Necesita una dirección!' })}
           />
           <label htmlFor='votingMunicipality'>Municipio de Votación</label>
           <select
-            defaultValue={
-              respondent?.votingTableId.pollingStation.votingMunicipality.id
-            }
             className="form-control"
             id="votingMunicipality"
             {...register('votingMunicipality', { required: 'Necesita un municipio de votación!' })}
+            defaultValue={
+              respondent?.votingTableId.pollingStation.votingMunicipality.id
+            }
             onChange={(e) =>
               setSelectedVotingMunicipalityId(parseInt(e.target.value))
             }
@@ -158,7 +167,7 @@ export const UpdateSurveyedModal = () => {
           </select>
           <label htmlFor='pollingStation'>Puesto de Votación</label>
           <select
-            value={selectedPollingStationId || respondent?.votingTableId.pollingStation.id}
+            value={respondent.votingTableId.pollingStation.id}
             className="form-control"
             id="pollingStation"
             {...register('pollingStation', { required: 'Necesita un puesto de votación!' })}
@@ -166,17 +175,17 @@ export const UpdateSurveyedModal = () => {
               (e) => setSelectedPollingStationId(parseInt(e.target.value))
             }
           >
-            {pollingStations.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
+            {pollingStations.length && pollingStations.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
           </select>
           <label htmlFor='votingTable'>Mesa de Votación</label>
           <select
-            defaultValue={"Seleccione un puesto de votación"}
+            defaultValue={respondent.votingTableId.id}
             className="form-control"
             id='votingTable'
             {...register('votingTable', { required: 'Necesita una mesa de votación...' })}
             onChange={(e) => console.log(e.target.value)}
           >
-            {votingTables.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
+            {votingTables.length && votingTables.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
           </select>
           <button className="btn btn-primary"type="submit">actualizar</button>
         </form>
