@@ -22,7 +22,8 @@ export const fetchSurveyed =
       const response = await axios.get(`${apiUrl}/surveyed/surveyed-by-user/${userLogged.id}`, {
         headers: { 
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const surveyed = response.data as SurveyedResponse[];
@@ -43,7 +44,8 @@ export const fetchSurveyedById =
       const response = await axios.get(`${apiUrl}/surveyed/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const respondent = response.data as SurveyedResponse;
@@ -76,7 +78,8 @@ export const fetchSurveyedById =
       const response = await axios.post(`${apiUrl}/surveyed`, surveyed, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
 
@@ -119,7 +122,8 @@ export const updateSurveyed =
       const response = await axios.put(`${apiUrl}/surveyed/${surveyedId}`, surveyed, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
 
@@ -144,7 +148,8 @@ export const deleteSurveyed =
       const response = axios.delete(`${apiUrl}/surveyed/${respondentId}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
 

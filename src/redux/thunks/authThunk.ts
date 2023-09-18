@@ -13,7 +13,12 @@ export const loginUser = (data: any) => async (dispatch: any) => {
       password: data.password,
     };
 
-    const response = await axios.post(`${apiUrl}/auth/login`, params);
+    const response = await axios.post(`${apiUrl}/auth/login`, params, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
 
     if (response.data.success === false) {
       dispatch(loginFailure(response.data.error));

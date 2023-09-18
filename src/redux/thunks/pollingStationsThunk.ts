@@ -11,7 +11,8 @@ export const fetchPollingStations =
       const response = await axios.get(`${apiUrl}/polling-stations/polling-stations-by-voting-municipality/${votingMunicipalityId}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const pollingStations = response.data;
@@ -31,7 +32,8 @@ export const fetchPollingStationsById =
       const response = await axios.get(`${apiUrl}/polling-stations/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const pollingStation = response.data;

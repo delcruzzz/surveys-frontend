@@ -39,7 +39,7 @@ export const TableBodySurveyed = ({ surveyed }: TableBodySurveyedProps) => {
         <td>{nameVotingMunicipality}</td>
         <td>{namePollingStation}</td>
         <td>{nameVotingTable}</td>
-        <td className='text-center'>
+        <td className='action-btn-table'>
           <button
             className='btn btn-primary mb-2'
             onClick={() => dispatch(fetchSurveyedById(surveyed.id))}

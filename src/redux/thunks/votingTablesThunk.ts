@@ -11,7 +11,8 @@ export const fetchVotingTables =
       const response = await axios.get(`${apiUrl}/voting-tables/voting-tables-by-polling-station/${pollingStationId}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const votingTables = response.data;
@@ -27,15 +28,22 @@ export const fetchVotingTables =
 export const fetchVotingTablesById =
   (id: number): Thunk =>
   async (dispatch) => {
+    dispatch(setLoading(true))
+
     try {
       const response = await axios.get(`${apiUrl}/voting-tables/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const votingTable = response.data;
       dispatch(setVotingTably(votingTable));
       return response;
-    } catch (error) {} finally {}
+    } catch (error) {
+      return error;
+    } finally {
+      dispatch(setLoading(false));
+    }
   }

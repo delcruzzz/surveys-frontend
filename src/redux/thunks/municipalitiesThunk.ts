@@ -12,7 +12,8 @@ export const fetchMunicipalities =
       const response = await axios.get(`${apiUrl}/municipalities`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const municipalities = response.data as MunicipalityResponse[];
@@ -33,7 +34,8 @@ export const fetchMunicipalitiesById =
       const response = await axios.get(`${apiUrl}/municipalities/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const municipality = response.data as MunicipalityResponse;

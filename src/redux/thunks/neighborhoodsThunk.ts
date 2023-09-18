@@ -11,7 +11,8 @@ export const fetchNeighborhoods =
       const response = await axios.get(`${apiUrl}/neighborhoods/neighborhoods-by-municipality/${municipalityId}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const neighborhoods = response.data;
@@ -31,7 +32,8 @@ export const fetchNeighborhoodsById =
       const response = await axios.get(`${apiUrl}/neighborhoods/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const neighborhood = response.data;

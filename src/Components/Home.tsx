@@ -19,7 +19,7 @@ const Home: FC<JSX.Element[]> = () => {
 
   return (
     <>
-      <div
+      <header
         style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -28,15 +28,19 @@ const Home: FC<JSX.Element[]> = () => {
         }}
       >
         <div>
-        <h2 className='m-3 '><p style={{ fontSize: 18 }}><b>LIDER: {userLogged.name} CEL: {userLogged.cellPhoneNumber} CC: {userLogged.identityCard}</b></p></h2>
+          <h2 className='m-3 '>
+            <p style={{ fontSize: 18 }}>
+              <b>Líder: {userLogged.name}, Télefono: {userLogged.cellPhoneNumber}, CC: {userLogged.identityCard}</b>
+            </p>
+          </h2>
         </div>
         <div>
           <button type='submit' className='butn' onClick={logout}>
             Cerrar Sesión
           </button>
         </div>
-      </div>
-      <div className='container'>
+      </header>
+      <main className='content-main'>
         <button 
           className='btn btn-success mb-3'
           onClick={() => dispatch(setOpenModalCreateRespondent(true))}
@@ -44,7 +48,7 @@ const Home: FC<JSX.Element[]> = () => {
           Agregar Votante
         </button>
         <TableSurveyed />
-      </div>
+      </main>
       <CreateSurveyedModal />
     </>
   );

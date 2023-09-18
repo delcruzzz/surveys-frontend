@@ -12,7 +12,8 @@ export const fetchVotingMunicipalities =
       const response = await axios.get(`${apiUrl}/voting-municipalities`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const votingMunicipalities = response.data as VotingMunicipalityResponse[];
@@ -33,7 +34,8 @@ export const fetchVotingMunicipalityiesById =
       const response = await axios.get(`${apiUrl}/voting-municipalities/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
       const votingMunicipality = response.data as VotingMunicipalityResponse;

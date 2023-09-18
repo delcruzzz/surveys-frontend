@@ -12,20 +12,20 @@ export const TableSurveyed = () => {
   }, [dispatch]);
 
   return (
-    <table className="table">
+    <table className="table res-table">
       <thead>
         <tr>
-          <th>LIDER</th>
-          <th>NOMBRE</th>
-          <th>TELEFONO</th>
-          <th>CEDULA</th>
-          <th>MUNICIPIO</th>
-          <th>BARRIO</th>
-          <th>DIRECCION</th>
-          <th>MUNICIPIO</th>
-          <th>P. VOTACION</th>
-          <th>MESA</th>
-          <th>ACCIONES</th>
+          <th>Líder</th>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Cédula</th>
+          <th>Municipio</th>
+          <th>Barrio</th>
+          <th>Dirección</th>
+          <th>Municipio</th>
+          <th>P. de votación</th>
+          <th>M. de votación</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
