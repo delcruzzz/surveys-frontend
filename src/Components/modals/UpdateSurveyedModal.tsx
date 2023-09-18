@@ -81,7 +81,6 @@ export const UpdateSurveyedModal = () => {
       <ModalHeader className="bg-primary text-white">Actualizar Encuestado</ModalHeader>
       <ModalBody>
         <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(handleSubmitUpdateForm)}>
-        <div className="form-group">
         <label htmlFor='name'>Nombre</label>
           <input
             type='text'
@@ -91,7 +90,6 @@ export const UpdateSurveyedModal = () => {
             defaultValue={respondent?.name}
             {...register('name', { required: 'Necesita un nombre!' })}
           />
-          </div>
           <label htmlFor='phoneNumber'>Celular</label>
           <input
             type="text"
