@@ -52,7 +52,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
       })
 
       .catch(function (error) {
-        console.log(error);
+        return error
       });
   };
   return (

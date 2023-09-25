@@ -81,8 +81,6 @@ export const UpdateSurveyedModal = () => {
     respondent.votingTableId.pollingStation.votingMunicipality.id
   ]);
 
-  console.log({respondent})
-
   return (
     <Modal isOpen={openModalUpdateRespondent}>
       <ModalHeader className="bg-primary text-white">Actualizar Encuestado</ModalHeader>
@@ -184,7 +182,6 @@ export const UpdateSurveyedModal = () => {
             }
           >
             {pollingStations.length && pollingStations.map((e, i) => {
-              console.log(e.name)
               return (<option key={i} value={e.id}>{e.name}</option>)
             })}
           </select>
@@ -198,7 +195,6 @@ export const UpdateSurveyedModal = () => {
             onChange={(e) => setSelectedVotingTableId(parseInt(e.target.value))}
           >
             {votingTables.length && votingTables.map((e, i) => {
-              console.log(e.name)
               return (<option key={i} value={e.id}>{e.name}</option>)
             })}
           </select>

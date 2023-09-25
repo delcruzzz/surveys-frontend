@@ -131,7 +131,6 @@ export const CreateSurveyedModal = () => {
             className="form-control"
             id='neighborhood'
             {...register('neighborhood', { required: 'Necesita un barrio...' })}
-            onChange={(e) => console.log(e.target.value)}
           >
             {neighborhoods.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
           </select>
@@ -183,7 +182,6 @@ export const CreateSurveyedModal = () => {
             className="form-control"
             id='votingTable'
             {...register('votingTable', { required: 'Necesita una mesa de votación...' })}
-            onChange={(e) => console.log(e.target.value)}
           >
             {votingTables.map((e, i) => (<option key={i} value={e.id}>{e.name}</option>))}
           </select>
