@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -75,12 +74,6 @@ const Login: FC<SomeComponentProps> = ({ history }): JSX.Element => {
                     >
                       Ingresar
                     </button>
-                    <p className='card-text pb-2'>
-                      No tienes una cuenta?{' '}
-                      <Link style={{ textDecoration: 'none' }} to={'/register'}>
-                        Registrarse
-                      </Link>
-                    </p>
                   </div>
                 </form>
               </div>

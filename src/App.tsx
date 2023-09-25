@@ -6,15 +6,17 @@ import Login from './Components/Login';
 import RestrictedRoute from './Auth/RestrictedRoute';
 import PrivateRoute from './Auth/PrivateRoute';
 import Home from './Components/Home';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Switch} from 'react-router-dom';
+import RoleProtectedRoute from './Auth/RoleProtectedRoute';
+
 function App() {
   return (
-      <BrowserRouter>
+    <BrowserRouter>
       <Switch>
         <PrivateRoute exact path='/' component={Home}/>
         <RestrictedRoute exact path='/login' component={Login} />
-        <Route exact path='/register' component={SignUp} />
-        </Switch>
+        <RoleProtectedRoute exact path='/signup' component={SignUp} />
+      </Switch>
     </BrowserRouter>
   );
 }
