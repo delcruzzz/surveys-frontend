@@ -61,7 +61,7 @@ const Home: FC<JSX.Element[]> = () => {
         </button>
 
         {validRole ? (
-          <Link to="/signup" className="btn btn-primary mb-3 mx-3">
+          <Link to="signup" className="btn btn-primary mb-3 mx-3">
             Crear usuario
           </Link>
         ) : null}

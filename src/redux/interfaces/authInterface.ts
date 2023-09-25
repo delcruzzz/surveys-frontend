@@ -18,3 +18,11 @@ export interface AuthUserResponse {
 export interface AuthUserRoles {
   name: string
 }
+
+export interface AuthJWTResponse {
+  id: number;
+  name: string;
+  roles: string[];
+  iat: number;
+  exp: number;
+}

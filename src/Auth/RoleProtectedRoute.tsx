@@ -1,20 +1,21 @@
 import { Redirect, Route } from 'react-router-dom';
-import { AuthUserResponse } from '../redux/interfaces/authInterface';
-
+import { AuthJWTResponse } from '../redux/interfaces/authInterface';
+import jwt_decode from "jwt-decode";
 
 const RoleProtectedRoute = (props:any) => {
-  const token = localStorage.getItem('token')
-  const userLogged: AuthUserResponse = JSON.parse(localStorage.getItem('user') || '{}')
-  const validRole = (userLogged.roles.length && userLogged.roles.find((role) => role.name === 'SUPERADMIN'))
+  const token = localStorage.getItem('auth') || '{}';
 
-  if (!!(validRole && token)) {
-    return <Redirect to='*' />
-  } else if (!(validRole && token)) {
-    return <><Route {...props} /></>
-  } else {
-    return <Redirect to='/login' />
+  try {
+    const decode: AuthJWTResponse = jwt_decode(token);
+    const validRole = decode.roles.find((role) => role.match('/SUPERADMIN'));
+
+    if (validRole && token) {
+      return <><Route {...props} /></>
+    }
+    return <Redirect to="*" />;
+  } catch (error) {
+    return <Redirect to="*" />;
   }
-
 };
 
 export default RoleProtectedRoute;
