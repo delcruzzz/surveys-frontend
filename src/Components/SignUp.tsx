@@ -1,4 +1,4 @@
-import { FC, useState} from "react";
+import { FC, useState } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -11,12 +11,8 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
   const [selectedRoles, setSelectedRoles] = useState([]);
 
   const toggleRole = (role: number) => {
-    if (selectedRoles.includes(role as never)) {
-      setSelectedRoles(selectedRoles.filter((item) => item !== role));
-    } else {
-      setSelectedRoles([...selectedRoles, role as never]);
-    }
-  }
+    setSelectedRoles([role as never]);
+  };
 
   const {
     register,
@@ -37,7 +33,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
-          "Authorization": `Bearer ${localStorage.getItem('auth')}`,
+          Authorization: `Bearer ${localStorage.getItem("auth")}`,
         },
       })
       .then(function (response) {
@@ -56,7 +52,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
       })
 
       .catch(function (error) {
-        return error
+        return error;
       });
   };
   return (
@@ -143,8 +139,13 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
                       </p>
                     )}
                   </div>
-                  <label className="form-label text-center">Selecciona tu Cargo:</label>
-                  {[{id: 1, name: 'Líder'}, {id: 2, name: 'Encuestador'}].map((item) => (
+                  <label className="form-label text-center">
+                    Selecciona tu Cargo:
+                  </label>
+                  {[
+                    { id: 1, name: "Líder" },
+                    { id: 2, name: "Encuestador" },
+                  ].map((item) => (
                     <div key={item.id}>
                       <label>
                         <input
