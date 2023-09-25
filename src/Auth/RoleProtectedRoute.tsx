@@ -8,15 +8,13 @@ const RoleProtectedRoute = (props:any) => {
   try {
     const decode: AuthJWTResponse = jwt_decode(token);
     const validRole = decode.roles.find((role) => role === 'SUPERADMIN');
-    console.table({roles: decode.roles})
-    console.table(validRole)
 
     if (validRole) {
       return <><Route {...props} /></>
     }
     return <Redirect to="/" />;
   } catch (error) {
-    return <Redirect to="*" />;
+    return <Redirect to="/" />;
   }
 };
 
