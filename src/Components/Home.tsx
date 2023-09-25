@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import './home.css';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { TableSurveyed } from './TableSurveyed';
 import { AuthUserResponse } from '../redux/interfaces/authInterface';
 import { useCustomDispatch } from '../redux/hooks/useRedux';
@@ -16,6 +16,8 @@ const Home: FC<JSX.Element[]> = () => {
     localStorage.clear();
     history.push('/login');
   };
+
+  const validRole = userLogged.roles.find((role) => role.name === 'SUPERADMIN');
 
   return (
     <>
@@ -47,6 +49,12 @@ const Home: FC<JSX.Element[]> = () => {
         >
           Agregar Votante
         </button>
+        
+        { 
+          validRole 
+            ? <Link to='/signup' className='btn btn-primary mb-3 mx-3'>Crear usuario</Link>
+            : null  
+        }
         <TableSurveyed />
       </main>
       <CreateSurveyedModal />

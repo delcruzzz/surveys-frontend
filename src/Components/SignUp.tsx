@@ -33,7 +33,13 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
       rolesId: selectedRoles,
     };
     axios
-      .post(`${apiUrl}/users`, params)
+      .post(`${apiUrl}/users`, params, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Authorization": `Bearer ${localStorage.getItem('auth')}`,
+        },
+      })
       .then(function (response) {
         toast.success(response.data.message, {
           position: "top-right",
@@ -112,7 +118,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
                     <input
                       type="text"
                       className="form-control form-control-sm"
-                      id="exampleFormControlInput3"
+                      id="exampleFormControlInput4"
                       {...register("identityCard", {
                         required: "Cédula es requerida!",
                       })}
@@ -144,7 +150,8 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
                     <div key={item.id}>
                       <label>
                         <input
-                          type="checkbox"
+                          type="radio"
+                          name="role"
                           value={item.id}
                           onChange={() => toggleRole(item.id)}
                         />
