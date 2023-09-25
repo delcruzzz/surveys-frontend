@@ -11,7 +11,7 @@ const RoleProtectedRoute = (props:any) => {
   const validRole = userLogged.roles.find((role) => role.name === 'SUPERADMIN')
 
 
-  return <>{!(validRole && token) ? <Route {...props} /> : <Redirect to='/' />}</>;
+  return <>{(validRole || token) ? <Route {...props} /> : <Redirect to='/' />}</>;
 
 };
 

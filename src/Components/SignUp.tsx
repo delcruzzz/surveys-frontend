@@ -52,9 +52,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
           toastId: "my_toast",
         });
         reset();
-        setTimeout(() => {
-          history.push("/login");
-        }, 3000);
+        history.push("/login");
       })
 
       .catch(function (error) {
