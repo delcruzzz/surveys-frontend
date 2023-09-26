@@ -19,26 +19,29 @@ const Home: FC<JSX.Element[]> = () => {
     history.push("/login");
   };
 
-  /* setTimeout(function () {
+  setTimeout(function () {
     localStorage.clear();
     history.push("/login");
-  }, 300000); */
+  }, 300000);
 
   const validRole = userLogged.roles.find((role) => role.name === "SUPERADMIN");
 
   return (
     <>
-      <header
-        className="flex md:flex-row flex-col-reverse items-center md:justify-between px-8 py-2 gap-3 my-2"
-      >
+      <header className="flex md:flex-row flex-col-reverse items-center md:justify-between px-8 py-2 gap-3 my-2">
         <div className="">
           <h1 className="uppercase text-4xl">votantes</h1>
           <p className="">
-            LÍDER: {userLogged.name}, CEL: {userLogged.cellPhoneNumber}, CC: {userLogged.identityCard}
+            LÍDER: {userLogged.name}, CEL: {userLogged.cellPhoneNumber}, CC:{" "}
+            {userLogged.identityCard}
           </p>
         </div>
         <div>
-          <button type="submit" className="bg-blue-300 px-8 py-2 rounded-lg" onClick={logout}>
+          <button
+            type="submit"
+            className="bg-blue-300 px-8 py-2 rounded-lg"
+            onClick={logout}
+          >
             Cerrar Sesión
           </button>
         </div>
