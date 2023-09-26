@@ -36,7 +36,12 @@ const Home: FC<JSX.Element[]> = () => {
           paddingRight: 50,
         }}
       >
-        <div>
+        <div className="d-flex flex-column">
+          <h1 className="m-2 text-center">
+            <p style={{ fontSize: 26 }}>
+              <b>VOTANTES</b>
+            </p>
+          </h1>
           <h2 className="m-3 ">
             <p style={{ fontSize: 18 }}>
               <b>
