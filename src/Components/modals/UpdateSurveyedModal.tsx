@@ -173,7 +173,7 @@ export const UpdateSurveyedModal = () => {
           </select>
           <label htmlFor='pollingStation'>Puesto de Votación</label>
           <select
-            value={respondent.votingTableId.pollingStation.id}
+            defaultValue={respondent.votingTableId.pollingStation.id}
             className="form-control"
             id="pollingStation"
             {...register('pollingStation', { required: 'Necesita un puesto de votación!' })}
