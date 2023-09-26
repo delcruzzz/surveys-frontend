@@ -28,24 +28,24 @@ export const TableBodySurveyed = ({ surveyed }: TableBodySurveyedProps) => {
 
   return (
     <>
-      <tr key={surveyed.id}>
-        <td>{nameUser}</td>
-        <td>{surveyed.name}</td>
-        <td>{surveyed.phoneNumber}</td>
-        <td>{surveyed.identityCard}</td>
-        <td>{nameMunicipality}</td>
-        <td>{nameNeighborhood}</td>
-        <td>{surveyed.address}</td>
-        <td>{nameVotingMunicipality}</td>
-        <td>{namePollingStation}</td>
-        <td>{nameVotingTable}</td>
-        <td className='action-btn-table'>
+      <tr key={surveyed.id} className='mx-2 border-b-2'>
+        <th scope="row" className="p-2 font-medium text-gray-900 whitespace-nowrap">{nameUser}</th>
+        <td className="p-2 text-gray-600">{surveyed.name}</td>
+        <td className="p-2 text-gray-600">{surveyed.phoneNumber}</td>
+        <td className="p-2 text-gray-600">{surveyed.identityCard}</td>
+        <td className="p-2 text-gray-600">{nameMunicipality}</td>
+        <td className="p-2 text-gray-600">{nameNeighborhood}</td>
+        <td className="p-2 text-gray-600">{surveyed.address}</td>
+        <td className="p-2 text-gray-600">{nameVotingMunicipality}</td>
+        <td className="p-2 text-gray-600">{namePollingStation}</td>
+        <td className="p-2 text-gray-600">{nameVotingTable}</td>
+        <td className="flex flex-col">
           <button
-            className='btn btn-primary mb-2'
+            className='m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
             onClick={() => dispatch(fetchSurveyedById(surveyed.id))}
           >Editar</button>
           <button
-            className='btn btn-danger'
+            className='m-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
             onClick={() => dispatch(deleteSurveyed(surveyed.id))}
           >Eliminar</button>
         </td>
