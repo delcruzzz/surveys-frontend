@@ -9,7 +9,6 @@ import { fetchVotingTables } from '../../redux/thunks/votingTablesThunk';
 import { fetchPollingStations } from '../../redux/thunks/pollingStationsThunk';
 import { fetchNeighborhoods } from '../../redux/thunks/neighborhoodsThunk';
 import { fetchVotingMunicipalities } from '../../redux/thunks/votingMunicipalityThunk';
-//import "bootswatch/dist/litera/bootstrap.min.css"
 
 export const CreateSurveyedModal = () => {
   const dispatch = useCustomDispatch();

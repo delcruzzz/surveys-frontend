@@ -1,6 +1,5 @@
-// authThunks.js
 import { loginStart, loginSuccess, loginFailure } from '../slices/authSlice';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { apiUrl } from '../../constants';
 import { AuthUserResponse } from '../interfaces/authInterface';
 
@@ -29,7 +28,7 @@ export const loginUser = (data: any) => async (dispatch: any) => {
       return response
     }
   } catch (error) {
-    console.error(error);
     dispatch(loginFailure('Hubo un error en la autenticación'));
+    return error as AxiosError;
   }
 };
