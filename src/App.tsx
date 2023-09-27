@@ -5,7 +5,7 @@ import Login from './Components/Login';
 import RestrictedRoute from './Auth/RestrictedRoute';
 import PrivateRoute from './Auth/PrivateRoute';
 import Home from './Components/Home';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import RoleProtectedRoute from './Auth/RoleProtectedRoute';
 import { NotFound } from './Components/NotFound';
 
@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoute exact path='/' component={Home}/>
+        <PrivateRoute exact path='/' component={Home} />
         <RestrictedRoute exact path='/login' component={Login} />
         <RoleProtectedRoute exact path='/signup' component={SignUp} />
         <Route path='*' component={NotFound} />

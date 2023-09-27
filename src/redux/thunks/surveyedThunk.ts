@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { 
   selectedRespondent, 
   setLoading, 
@@ -11,7 +11,7 @@ import {
 import { Thunk } from '../store';
 import { apiUrl } from '../../constants';
 import { CreateSurveyed, SurveyedResponse, UpdateSurveyed } from '../interfaces/surveyedInterface';
-import { addMessage } from '../slices/uiSlice';
+import { toast } from 'react-toastify';
 
 export const fetchSurveyed = 
   (): Thunk => 
@@ -85,17 +85,11 @@ export const fetchSurveyedById =
 
       const respondent = response.data as SurveyedResponse;
       dispatch(updateListSurveyed(respondent));
-      dispatch(addMessage({
-        message: 'Encuestado creado con éxito',
-        variant: 'success',
-      }))
-      return response;
+      toast.success('Encuestado creado con éxito');
+      return response as AxiosResponse;
     } catch (error) {
-      dispatch(addMessage({
-        message: 'Error al crear el encuestado',
-        variant: 'error',
-      }))
-      return error;
+      toast.error('Hubo un error al crear el encuestado');
+      return error as AxiosError;
     } finally {
       dispatch(setLoading(false));
     }

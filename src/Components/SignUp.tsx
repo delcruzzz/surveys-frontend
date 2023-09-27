@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { ToastContainer, toast, Flip } from "react-toastify";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { apiUrl } from "../constants";
 
@@ -37,22 +37,27 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
         },
       })
       .then(function (response) {
-        toast.success(response.data.message, {
+        toast.success("Usuario registrado con éxito!", {
           position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: true,
+          autoClose: 2000,
+          hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
-          draggable: false,
-          progress: 0,
-          toastId: "my_toast",
         });
         reset();
         history.push("/login");
+        return response as AxiosResponse;
       })
 
       .catch(function (error) {
-        return error;
+        toast.error("Error al registrar usuario!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        });
+        return error as AxiosError;
       });
   };
   return (
@@ -165,12 +170,6 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
                     >
                       Registrase
                     </button>
-                    <p className="card-text">
-                      Ya tienes una cuenta?{" "}
-                      <Link style={{ textDecoration: "none" }} to={"/login"}>
-                        Inicio de Sesión
-                      </Link>
-                    </p>
                   </div>
                 </form>
               </div>
@@ -178,18 +177,6 @@ const SignUp: FC<SomeComponentProps> = ({ history }): JSX.Element => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover
-        limit={1}
-        transition={Flip}
-      />
     </>
   );
 };
