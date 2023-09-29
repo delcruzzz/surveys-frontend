@@ -1,21 +1,14 @@
-import axios from 'axios';
 import { setLoading, setVotingMunicipalities, setVotingMunicipality } from '../slices/votingMunicipalitySlice';
 import { Thunk } from '../store';
-import { apiUrl } from '../../constants';
 import { VotingMunicipalityResponse } from '../interfaces/votingMunicipalityInterface';
+import apiConfig from '../../services/axios/axiosConfig';
 
 export const fetchVotingMunicipalities =
   (): Thunk =>
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.get(`${apiUrl}/voting-municipalities`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const response = await apiConfig.get(`/voting-municipalities`);
       const votingMunicipalities = response.data as VotingMunicipalityResponse[];
       dispatch(setVotingMunicipalities(votingMunicipalities));
       return response;
@@ -31,13 +24,7 @@ export const fetchVotingMunicipalityiesById =
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.get(`${apiUrl}/voting-municipalities/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const response = await apiConfig.get(`/voting-municipalities/${id}`);
       const votingMunicipality = response.data as VotingMunicipalityResponse;
       dispatch(setVotingMunicipality(votingMunicipality));
       return response;

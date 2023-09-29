@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { 
   selectedRespondent, 
   setLoading, 
@@ -12,6 +12,7 @@ import { Thunk } from '../store';
 import { apiUrl } from '../../constants';
 import { CreateSurveyed, SurveyedResponse, UpdateSurveyed } from '../interfaces/surveyedInterface';
 import { toast } from 'react-toastify';
+import apiConfig from '../../services/axios/axiosConfig';
 
 export const fetchSurveyed = 
   (): Thunk => 
@@ -19,13 +20,7 @@ export const fetchSurveyed =
     dispatch(setLoading(true));
     try {
       const userLogged = JSON.parse(localStorage.getItem('user') || '{}');
-      const response = await axios.get(`${apiUrl}/surveyed/surveyed-by-user/${userLogged.id}`, {
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const response = await apiConfig.get(`${apiUrl}/surveyed/surveyed-by-user/${userLogged.id}`);
       const surveyed = response.data as SurveyedResponse[];
       dispatch(setSurveyed(surveyed));
       return response;
@@ -41,13 +36,7 @@ export const fetchSurveyedById =
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.get(`${apiUrl}/surveyed/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const response = await apiConfig.get(`${apiUrl}/surveyed/${id}`);
       const respondent = response.data as SurveyedResponse;
       dispatch(selectedRespondent(respondent));
       dispatch(setOpenModalUpdateRespondent(true));
@@ -75,13 +64,7 @@ export const fetchSurveyedById =
         votingTable: surveyed.votingTable
       }
 
-      const response = await axios.post(`${apiUrl}/surveyed`, surveyed, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const response = await apiConfig.post(`/surveyed`, surveyed);
 
       const respondent = response.data as SurveyedResponse;
       dispatch(updateListSurveyed(respondent));
@@ -113,13 +96,7 @@ export const updateSurveyed =
         votingTable: surveyed.votingTable,
       }
 
-      const response = await axios.put(`${apiUrl}/surveyed/${surveyedId}`, surveyed, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const response = await apiConfig.put(`/surveyed/${surveyedId}`, surveyed);
 
       const respondent = response.data as SurveyedResponse;
 
@@ -139,13 +116,7 @@ export const deleteSurveyed =
     window.location.replace('');
 
     try {
-      const response = axios.delete(`${apiUrl}/surveyed/${respondentId}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const response = apiConfig.delete(`/surveyed/${respondentId}`);
 
       const respondent = (await response).data as SurveyedResponse;
 

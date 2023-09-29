@@ -1,21 +1,14 @@
-import axios from 'axios';
 import { setLoading, setMunicipalities, setMunicipality } from '../slices/municipalitiesSlice';
 import { Thunk } from '../store';
-import { apiUrl } from '../../constants';
 import { MunicipalityResponse } from '../interfaces/municipalitiesInterface';
+import apiConfig from '../../services/axios/axiosConfig';
 
 export const fetchMunicipalities = 
   (): Thunk => 
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.get(`${apiUrl}/municipalities`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const response = await apiConfig.get(`/municipalities`);
       const municipalities = response.data as MunicipalityResponse[];
       dispatch(setMunicipalities(municipalities));
       return response;
@@ -31,13 +24,7 @@ export const fetchMunicipalitiesById =
   async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await axios.get(`${apiUrl}/municipalities/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth')}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const response = await apiConfig.get(`/municipalities/${id}`);
       const municipality = response.data as MunicipalityResponse;
       dispatch(setMunicipality(municipality));
       return response;

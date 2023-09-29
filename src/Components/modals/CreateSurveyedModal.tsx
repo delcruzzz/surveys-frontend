@@ -48,7 +48,6 @@ export const CreateSurveyedModal = () => {
     }
     dispatch(createSurveyed(data))
     dispatch(setOpenModalCreateRespondent(false))
-    window.location.replace('')
   }
 
 

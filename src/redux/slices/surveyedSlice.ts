@@ -65,7 +65,7 @@ const surveyedSlice = createSlice({
     updateListSurveyedAction: (state, action: PayloadAction<SurveyedResponse>) => {
       const updateSurveyed = action.payload;
       const existingSurveyedIndex = state.surveyed.findIndex(respondent => respondent.id === updateSurveyed.id);
-      state.surveyed.splice(existingSurveyedIndex, 1, updateSurveyed)
+      state.surveyed.splice(existingSurveyedIndex, 1, updateSurveyed);
     },
     updateListSurveyedAfterDelete: (state, action: PayloadAction<SurveyedResponse>) => {
       const respondent = action.payload.id;

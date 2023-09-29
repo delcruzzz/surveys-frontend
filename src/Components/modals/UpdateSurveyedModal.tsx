@@ -55,9 +55,9 @@ export const UpdateSurveyedModal = () => {
       neighborhoodId: Number(data.neighborhood),
       votingTable: data.votingTable
     }
-    await dispatch(updateSurveyed(data, respondent.id))
+    dispatch(updateSurveyed(data, respondent.id))
     dispatch(setOpenModalUpdateRespondent(false))
-    window.location.replace('');
+    window.location.replace('')
   }
 
   const handleCancelUpdate = () => {
@@ -76,9 +76,7 @@ export const UpdateSurveyedModal = () => {
     selectedPollingStationId, 
     selectedMunicipalityId, 
     selectedVotingMunicipality,
-    respondent.neighborhood.municipality.id,
-    respondent.votingTableId.pollingStation.id,
-    respondent.votingTableId.pollingStation.votingMunicipality.id
+    respondent
   ]);
 
   return (
